@@ -1,11 +1,17 @@
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import managers.LeagueScoreEngine;
+import models.Game;
+import models.Player;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import play.test.UnitTest;
 
-public class LeagueScoreEngineTest {
+public class LeagueScoreEngineTest extends UnitTest{
 	public static final int PLAYER_BASIC_SCORE = 1000;
 	private LeagueScoreEngine scoreEngine;
 	private Game game;

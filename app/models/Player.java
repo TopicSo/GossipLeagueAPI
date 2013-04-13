@@ -1,3 +1,4 @@
+package models;
 
 public class Player {
 	public int score;

@@ -1,3 +1,6 @@
+package managers;
+
+import models.Game;
 
 public class LeagueScoreEngine {
 	public Game evaluateGame(Game game) {
