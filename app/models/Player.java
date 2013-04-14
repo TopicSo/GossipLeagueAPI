@@ -1,9 +1,9 @@
 package models;
 
 public class Player {
-	public int score;
+	public double score;
 	
-	public Player(int score) {
+	public Player(double score) {
 		super();
 		this.score = score;
 	}
