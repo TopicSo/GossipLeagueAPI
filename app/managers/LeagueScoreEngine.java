@@ -1,13 +1,9 @@
 package managers;
 
 import models.Game;
+import models.Player;
 
-public class LeagueScoreEngine {
-	
-	public enum PlayerType {
-	    LOCAL, VISITOR
-	}
-	
+public class LeagueScoreEngine {	
 	public Game evaluateFriendshipGame(Game game) {		
 		return updateGame(game, 20);
 	}
@@ -20,32 +16,40 @@ public class LeagueScoreEngine {
 		if (game == null) {
 			return null;
 		}
-		game.local.score += pointsChange(game, PlayerType.LOCAL, K);
-		game.visitor.score += pointsChange(game, PlayerType.VISITOR, K);
+		
+		double localPointsChange = pointsChange(game, Player.Type.LOCAL, K);
+		double visitorPointsChange = pointsChange(game, Player.Type.VISITOR, K);
+		
+		game.local.score += localPointsChange;
+		game.visitor.score += visitorPointsChange;
 		
 		return game;
 	}
 	
-	public double pointsChange(Game game, PlayerType playerType, int K) {
-		return K * gScore(game) * (gameResult(game, playerType) - expectedGameResult(game, playerType));
+	public double pointsChange(Game game, Player.Type playerType, int K) {
+		return twoDecimalDouble(K * gScore(game) * (gameResult(game, playerType) - expectedGameResult(game, playerType)));
+	}
+
+	private double twoDecimalDouble(double value) {
+		return Math.round(value*100)/100.0d;
 	}
 	
-	private double gameResult(Game game, PlayerType playerType) {
+	public double gameResult(Game game, Player.Type playerType) {
 		int golsLocal = game.golsLocal;
 		int golsVisitor = game.golsVisitor;
 		
 		if (golsLocal == golsVisitor) {
 			return 0.5;
 		} else if (golsLocal > golsVisitor) {
-			return (playerType == PlayerType.LOCAL) ? 1 : 0;
+			return (playerType == Player.Type.LOCAL) ? 1 : 0;
 		} else {
-			return (playerType == PlayerType.VISITOR) ? 1 : 0;
+			return (playerType == Player.Type.VISITOR) ? 1 : 0;
 		}
 	}
 	
-	public double expectedGameResult(Game game, PlayerType playerType) {
+	public double expectedGameResult(Game game, Player.Type playerType) {
 		double localExpectedGameResult = 1.0/(Math.pow(10, -(double)scoreDifference(game)/400) + 1);
-		if (playerType == PlayerType.LOCAL) {
+		if (playerType == Player.Type.LOCAL) {
 			return localExpectedGameResult;
 		} else {
 			return 1 - localExpectedGameResult;

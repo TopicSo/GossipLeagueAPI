@@ -29,8 +29,8 @@ import play.test.UnitTest;
 | K			| 20		20		| 20		20		| 20		20		|
 | G			| 1.5		1.5		| 1.5		1.5		| 1			1		|
 | W			| 1			0		| 0			1		| 0.5		0.5		|
-| We		| 0.679		0.321 	| 0.679		0.321	| 0.679		0.321	|
-|Total (P)	| +9.63		-9.63	| -20.37	+20.37	| -3.58		+3.58	|
+| We		| 0.68		0.32 	| 0.68		0.32	| 0.68		0.32	|
+| Total (P)	| +9.64		-9.64	| -20.37	+20.37	| -3.58		+3.58	|
 -------------------------------------------------------------------------
 
 */
@@ -75,64 +75,104 @@ public class LeagueScoreEngineTest extends UnitTest{
 	@Test
 	public void testExpectedGameResultIsCorrectForLocal() { 
 		createBasicGame(3, 1);
-		double expectedGameResult = scoreEngine.expectedGameResult(game, LeagueScoreEngine.PlayerType.LOCAL);
+		double expectedGameResult = scoreEngine.expectedGameResult(game, Player.Type.LOCAL);
 		
-		assertEquals(0.679, expectedGameResult, 1e-3);
+		assertEquals(0.68, expectedGameResult, 1e-2);
 	}
 	
 	@Test
 	public void testExpectedGameResultIsCorrectForVisitor() { 
 		createBasicGame(3, 1);
-		double expectedGameResult = scoreEngine.expectedGameResult(game, LeagueScoreEngine.PlayerType.VISITOR);
+		double expectedGameResult = scoreEngine.expectedGameResult(game, Player.Type.VISITOR);
 		
-		assertEquals(0.321, expectedGameResult, 1e-3);
+		assertEquals(0.32, expectedGameResult, 1e-2);
 	}
 	
 	@Test
 	public void testPointsChangeForLocalIsCorrect() { 
 		createBasicGame(3, 1);
-		double pointsChange = scoreEngine.pointsChange(game, LeagueScoreEngine.PlayerType.LOCAL, 20);
+		double pointsChange = scoreEngine.pointsChange(game, Player.Type.LOCAL, 20);
 		
-		assertEquals(9.63, pointsChange, 1e-2);
+		assertEquals(9.64, pointsChange, 1e-2);
 	}
 	
-
+	@Test
+	public void testPointsChangeForVisitorlIsCorrect() { 
+		createBasicGame(3, 1);
+		double pointsChange = scoreEngine.pointsChange(game, Player.Type.VISITOR, 20);
+		
+		assertEquals(-9.64, pointsChange, 1e-2);
+	}
+	
+	@Test
+	public void testPointsChangeForLocalIsCorrect2() { 
+		createBasicGame(1, 3);
+		double pointsChange = scoreEngine.pointsChange(game, Player.Type.LOCAL, 20);
+		
+		assertEquals(-20.36, pointsChange, 1e-2);
+	}
+	
+	@Test
+	public void testPointsChangeForVisitorlIsCorrect2() { 
+		createBasicGame(1, 3);
+		double pointsChange = scoreEngine.pointsChange(game, Player.Type.VISITOR, 20);
+		
+		assertEquals(20.36, pointsChange, 1e-2);
+	}
+	
 	@Test
 	public void testCase1() {
 		createBasicGame(3, 1);
 		Game theGame = scoreEngine.evaluateFriendshipGame(game);
 		
-		
-		assertEquals((PLAYER_A_BASIC_SCORE + 9.63), theGame.local.score, 1);
-		assertEquals((PLAYER_B_BASIC_SCORE - 9.63), theGame.visitor.score, 1);
+		assertEquals((PLAYER_A_BASIC_SCORE + 9.64), theGame.local.score, 1e-18);
+		assertEquals((PLAYER_B_BASIC_SCORE - 9.64), theGame.visitor.score, 1e-18);
 	}
 	
 	@Test
 	public void testCase2() {
 		createBasicGame(1, 3);
 		Game theGame = scoreEngine.evaluateFriendshipGame(game);
-		
-		
-		assertEquals((PLAYER_A_BASIC_SCORE - 20.37), theGame.local.score, 1);
-		assertEquals((PLAYER_B_BASIC_SCORE + 20.37), theGame.visitor.score, 1);
+			
+		assertEquals((PLAYER_A_BASIC_SCORE - 20.36), theGame.local.score, 1e-18);
+		assertEquals((PLAYER_B_BASIC_SCORE + 20.36), theGame.visitor.score, 1e-18);
 	}
 	
 	@Test
 	public void testCase3() {
 		createBasicGame(2, 2);
 		Game theGame = scoreEngine.evaluateFriendshipGame(game);
-		
-		
-		assertEquals((PLAYER_A_BASIC_SCORE - 3.58), theGame.local.score, 1);
-		assertEquals((PLAYER_B_BASIC_SCORE + 3.58), theGame.visitor.score, 1);
+			
+		assertEquals((PLAYER_A_BASIC_SCORE - 3.58), theGame.local.score, 1e-18);
+		assertEquals((PLAYER_B_BASIC_SCORE + 3.58), theGame.visitor.score, 1e-18);
+	}
+	
+	@Test
+	public void testGameResultForWinner() {
+		createBasicGame(3, 1);
+		double gameResult = scoreEngine.gameResult(game, Player.Type.LOCAL);
+			
+		assertEquals(1, gameResult, 1e-18);
+	}
+	
+	@Test
+	public void testGameResultForLoser() {
+		createBasicGame(3, 1);
+		double gameResult = scoreEngine.gameResult(game, Player.Type.VISITOR);
+			
+		assertEquals(0, gameResult, 1e-18);
+	}
+	
+	@Test
+	public void testGameResultForDrawn() {
+		createBasicGame(3, 3);
+		double gameResult = scoreEngine.gameResult(game, Player.Type.VISITOR);
+			
+		assertEquals(0.5, gameResult, 1e-18);
 	}
 	
 	private Game createBasicGame(int golsLocal, int golsVisitor) {
-		Player local = new Player(PLAYER_A_BASIC_SCORE);
-		Player visitor = new Player(PLAYER_B_BASIC_SCORE);
-		game = new Game(local, visitor, golsLocal, golsVisitor);  
-		game.golsLocal = golsLocal;
-		game.golsVisitor = golsVisitor;
+		game = new Game(new Player(PLAYER_A_BASIC_SCORE), new Player(PLAYER_B_BASIC_SCORE), golsLocal, golsVisitor);
 		return game;
 	}
 }
