@@ -36,9 +36,9 @@ public class Player extends GenericModel{
 
 	private int countDraws;
 
-	public int score; // TODO: Should be private
+	public double score; // TODO: Should be private
 	
-	public Player(int score) {
+	public Player(double score) {
 		super();
 		this.score = score;
 	}
