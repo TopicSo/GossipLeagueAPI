@@ -128,9 +128,9 @@ public class LeagueScoreEngineTest extends UnitTest{
 	}
 	
 	private Game createBasicGame(int golsLocal, int golsVisitor) {
-		game = new Game();
-		game.local = new Player(PLAYER_A_BASIC_SCORE);
-		game.visitor = new Player(PLAYER_B_BASIC_SCORE);
+		Player local = new Player(PLAYER_A_BASIC_SCORE);
+		Player visitor = new Player(PLAYER_B_BASIC_SCORE);
+		game = new Game(local, visitor, golsLocal, golsVisitor);  
 		game.golsLocal = golsLocal;
 		game.golsVisitor = golsVisitor;
 		return game;
