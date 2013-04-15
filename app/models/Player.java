@@ -13,7 +13,9 @@ import play.db.jpa.GenericModel;
 @Entity
 public class Player extends GenericModel{
 
-    @Id
+    public static final double DEFAULT_SCORE = 1000;
+
+	@Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
@@ -48,11 +50,18 @@ public class Player extends GenericModel{
 		super();
 		this.username = username;
 		this.email = email;
+		this.score = DEFAULT_SCORE;
 	}
 	
 	/*
 	 * Getters
 	 */
 
+	public String getEmail() {
+		return this.email;
+	}
 	
+	public String getUsername() {
+		return this.username;
+	}	
 }
