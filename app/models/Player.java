@@ -12,7 +12,9 @@ import play.db.jpa.GenericModel;
 
 @Entity
 public class Player extends GenericModel{
-
+	public enum Type {
+	    LOCAL, VISITOR
+	}
     public static final double DEFAULT_SCORE = 1000;
 
 	@Id
