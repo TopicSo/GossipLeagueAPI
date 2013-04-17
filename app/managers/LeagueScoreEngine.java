@@ -21,8 +21,8 @@ public class LeagueScoreEngine {
 		double localPointsChange = EloScoreEngine.pointsChange(game, Player.Type.LOCAL, K);
 		double visitorPointsChange = EloScoreEngine.pointsChange(game, Player.Type.VISITOR, K);
 		
-		game.local.setScore(game.local.getScore() + localPointsChange);
-		game.visitor.setScore(game.visitor.getScore() + visitorPointsChange);
+		game.getLocal().setScore(game.getLocal().getScore() + localPointsChange);
+		game.getVisitor().setScore(game.getVisitor().getScore() + visitorPointsChange);
 		
 		return game;
 	}
