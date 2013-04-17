@@ -1,0 +1,10 @@
+{
+	"games":[
+	#{list games, as:'game' } 
+{
+	#{presenters/game game:game /}
+    }#{if !game_isLast},#{/if}
+
+#{/list}
+]
+}

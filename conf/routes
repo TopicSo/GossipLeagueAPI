@@ -13,3 +13,6 @@ GET     /public/                                staticDir:public
 
 # PLayers
 GET		/players/ranking/?						PlayerController.ranking(format:'json')
+
+# PLayers
+GET		/games/?								GameController.list(format:'json')
