@@ -1,2 +1,3 @@
 "id": "${_player.getId()}",
-"username": "${_player.getUsername()}"
+"username": "${_player.getUsername()}",
+"score": "${_player.score}"

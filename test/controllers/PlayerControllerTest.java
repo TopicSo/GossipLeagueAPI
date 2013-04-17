@@ -1,18 +1,16 @@
 package controllers;
 
-import java.util.List;
-
 import models.Player;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import play.Logger;
 import play.mvc.Http.Response;
 import play.test.Fixtures;
 import play.test.FunctionalTest;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 public class PlayerControllerTest extends FunctionalTest {
@@ -53,7 +51,25 @@ public class PlayerControllerTest extends FunctionalTest {
 		Player p1 = new Player("user1", "email1");
 		p1.save();
 		
-		List<Player> ps = Player.findAll();
+        response = GET("/players/ranking");
+        
+        assertIsOk(response);
+        assertContentType("application/json", response);
+
+    	JsonParser parser = new JsonParser();
+        JsonArray players = parser.parse(response.out.toString()).getAsJsonObject().getAsJsonArray("players");
+        assertTrue(players.size() == 1);
+    }
+
+	@Test
+    public void playersRankingFirstPlayerHasMorePointsThanTheSecondOne() {
+		Player p1 = new Player("user1", "email1");
+		p1.score = 100;
+		p1.save();
+		
+		Player p2 = new Player("user2", "email2");
+		p2.score = 200;
+		p2.save();
 		
         response = GET("/players/ranking");
         
@@ -62,7 +78,11 @@ public class PlayerControllerTest extends FunctionalTest {
 
     	JsonParser parser = new JsonParser();
         JsonArray players = parser.parse(response.out.toString()).getAsJsonObject().getAsJsonArray("players");
-        Logger.info("asdadada players-size:" + ps.size() + "\n" + response.out.toString());
-        assertTrue(players.size() == 1);
+        assertTrue(players.size() == 2);
+
+        JsonObject first = players.get(0).getAsJsonObject();        
+        JsonObject second = players.get(1).getAsJsonObject();
+        
+        assertTrue(first.getAsJsonPrimitive("score").getAsDouble() > second.getAsJsonPrimitive("score").getAsDouble());
     }
 }

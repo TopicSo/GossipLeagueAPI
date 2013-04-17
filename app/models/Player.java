@@ -9,7 +9,6 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import play.Logger;
 import play.data.validation.Required;
 import play.data.validation.Unique;
 import play.db.jpa.GenericModel;
@@ -85,7 +84,6 @@ public class Player extends GenericModel{
 	 */
 	
 	public static List<Player> findPlayersSortedByScore() {
-		Logger.info("ola k ase, findea o k ase");
-		return Player.findAll();
+		return Player.find("order by score desc").fetch();
 	}	
 }
