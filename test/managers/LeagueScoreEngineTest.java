@@ -59,8 +59,8 @@ public class LeagueScoreEngineTest extends BaseScoreEngineTest{
 	public void testEvaluateResultReturnSamePlayersIntoTheScore() { 
 		Game theGame = scoreEngine.evaluateFriendshipGame(game);
 		
-		assertTrue(theGame.local instanceof Player);
-		assertTrue(theGame.visitor instanceof Player);
+		assertTrue(theGame.getLocal() instanceof Player);
+		assertTrue(theGame.getVisitor() instanceof Player);
 	}
 	
 	
@@ -70,8 +70,8 @@ public class LeagueScoreEngineTest extends BaseScoreEngineTest{
 		createBasicGame(3, 1);
 		Game theGame = scoreEngine.evaluateFriendshipGame(game);
 		
-		assertDouble((PLAYER_A_BASIC_SCORE + 9.64), theGame.local.getScore());
-		assertDouble((PLAYER_B_BASIC_SCORE - 9.64), theGame.visitor.getScore());
+		assertDouble((PLAYER_A_BASIC_SCORE + 9.64), theGame.getLocal().getScore());
+		assertDouble((PLAYER_B_BASIC_SCORE - 9.64), theGame.getVisitor().getScore());
 	}
 	
 	@Test
@@ -79,8 +79,8 @@ public class LeagueScoreEngineTest extends BaseScoreEngineTest{
 		createBasicGame(1, 3);
 		Game theGame = scoreEngine.evaluateFriendshipGame(game);
 			
-		assertDouble((PLAYER_A_BASIC_SCORE - 20.36), theGame.local.getScore());
-		assertDouble((PLAYER_B_BASIC_SCORE + 20.36), theGame.visitor.getScore());
+		assertDouble((PLAYER_A_BASIC_SCORE - 20.36), theGame.getLocal().getScore());
+		assertDouble((PLAYER_B_BASIC_SCORE + 20.36), theGame.getVisitor().getScore());
 	}
 	
 	@Test
@@ -88,7 +88,7 @@ public class LeagueScoreEngineTest extends BaseScoreEngineTest{
 		createBasicGame(2, 2);
 		Game theGame = scoreEngine.evaluateFriendshipGame(game);
 			
-		assertDouble((PLAYER_A_BASIC_SCORE - 3.58), theGame.local.getScore());
-		assertDouble((PLAYER_B_BASIC_SCORE + 3.58), theGame.visitor.getScore());
+		assertDouble((PLAYER_A_BASIC_SCORE - 3.58), theGame.getLocal().getScore());
+		assertDouble((PLAYER_B_BASIC_SCORE + 3.58), theGame.getVisitor().getScore());
 	}
 }

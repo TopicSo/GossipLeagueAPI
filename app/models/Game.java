@@ -20,17 +20,17 @@ public class Game extends GenericModel{
     
     @Required
     @ManyToOne
-	public Player local;
-    
-    @Required
+    private Player local;
+   
+	@Required
     @ManyToOne
-    public Player visitor;
+    private Player visitor;
 	
     @Required
-	public int golsLocal;
+    private int golsLocal;
     
     @Required
-	public int golsVisitor;
+    private int golsVisitor;
 
     public Game(Player localPlayer, Player visitorPlayer, int localGoals, int visitorGoals){
     	super();
@@ -40,5 +40,36 @@ public class Game extends GenericModel{
     	this.golsLocal = localGoals;
     	this.golsVisitor = visitorGoals;
     }
+    
+    public Player getLocal() {
+		return local;
+	}
 
+	public void setLocal(Player local) {
+		this.local = local;
+	}
+
+	public Player getVisitor() {
+		return visitor;
+	}
+
+	public void setVisitor(Player visitor) {
+		this.visitor = visitor;
+	}
+
+	public int getGolsLocal() {
+		return golsLocal;
+	}
+
+	public void setGolsLocal(int golsLocal) {
+		this.golsLocal = golsLocal;
+	}
+
+	public int getGolsVisitor() {
+		return golsVisitor;
+	}
+
+	public void setGolsVisitor(int golsVisitor) {
+		this.golsVisitor = golsVisitor;
+	}
 }
