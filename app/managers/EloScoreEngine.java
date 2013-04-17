@@ -10,8 +10,8 @@ public class EloScoreEngine {
 	}
 	
 	public static double gameResult(Game game, Player.Type playerType) {
-		int golsLocal = game.golsLocal;
-		int golsVisitor = game.golsVisitor;
+		int golsLocal = game.getGolsLocal();
+		int golsVisitor = game.getGolsVisitor();
 		
 		if (golsLocal == golsVisitor) {
 			return 0.5;
@@ -43,10 +43,10 @@ public class EloScoreEngine {
 	}
 	
 	private static int golsDifference(Game game) {
-		return Math.abs(game.golsLocal - game.golsVisitor);
+		return Math.abs(game.getGolsLocal() - game.getGolsVisitor());
 	}
 	
 	private static double scoreDifference(Game game) {
-		return Math.abs(game.local.getScore() - game.visitor.getScore());
+		return Math.abs(game.getLocal().getScore() - game.getVisitor().getScore());
 	}
 }
