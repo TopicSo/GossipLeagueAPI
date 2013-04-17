@@ -1,0 +1,7 @@
+"id": "${_game.getId()}",
+"local": {
+#{presenters/player player:_game.getLocal() /}
+},
+"visitor": {
+#{presenters/player player:_game.getVisitor() /}
+}

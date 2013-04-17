@@ -41,32 +41,44 @@ public class Game extends GenericModel{
     	this.golsVisitor = visitorGoals;
     }
     
+    /*
+     * Getter
+     */
+    
+    public String getId(){
+    	return id;
+    }
+    
     public Player getLocal() {
 		return local;
 	}
 
+    public Player getVisitor() {
+    	return visitor;
+    }
+
+    public int getGolsLocal() {
+    	return golsLocal;
+    }
+    
+    public int getGolsVisitor() {
+    	return golsVisitor;
+    }
+
+    /*
+     * Setter
+     */
+    
 	public void setLocal(Player local) {
 		this.local = local;
-	}
-
-	public Player getVisitor() {
-		return visitor;
 	}
 
 	public void setVisitor(Player visitor) {
 		this.visitor = visitor;
 	}
 
-	public int getGolsLocal() {
-		return golsLocal;
-	}
-
 	public void setGolsLocal(int golsLocal) {
 		this.golsLocal = golsLocal;
-	}
-
-	public int getGolsVisitor() {
-		return golsVisitor;
 	}
 
 	public void setGolsVisitor(int golsVisitor) {

@@ -23,7 +23,12 @@ public class GameControllerTest extends BaseControllerTest {
 	
 	@Test
 	public void OneGameReturnsOneGame(){
-		Game game = new Game(new Player("local", "localmail"), new Player("visitor", "visitormail"), 2, 3);
+		Player localPlayer = new Player("local", "localmail");
+		localPlayer.save();
+		Player visitorPlayer = new Player("visitor", "visitormail");
+		visitorPlayer.save();
+		
+		Game game = new Game(localPlayer, visitorPlayer, 2, 3);
 		game.save();
 		
 		response = GET("/games");

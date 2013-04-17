@@ -10,9 +10,9 @@ import play.mvc.Controller;
 public class GameController extends Controller {
 
 	public static void list(String playerId){
-		List<Game> games = null;
+		List<Game> games = Game.findAll();
 		
-		render();
+		render(games);
 	}
 	
     public static void addGame(String localPlayerId, String visitorPlayerId, int localGoals, int visitorGoals) throws Exception{

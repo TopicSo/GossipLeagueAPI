@@ -1,6 +1,7 @@
 package controllers;
 
 import org.junit.Before;
+import org.junit.Test;
 
 import play.mvc.Http.Response;
 import play.test.Fixtures;
@@ -15,5 +16,10 @@ public class BaseControllerTest extends FunctionalTest {
 
         Fixtures.deleteDatabase();
         response = null;
+    }
+	
+	@Test
+    public void aVeryImportantThingToTest() {
+        assertTrue(true);
     }
 }
