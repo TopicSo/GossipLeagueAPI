@@ -46,10 +46,10 @@ public class Player extends GenericModel{
 
 	private int countDraws;
 
-	public double score; // TODO: Should be private
+	private double score;
 	
-	public Player(double score) { 
-		super();
+	public Player(String username, String email, double score) { 
+		this(username, email);
 		this.score = score;
 	}
 	
@@ -83,6 +83,14 @@ public class Player extends GenericModel{
 	 * Find 
 	 */
 	
+	public double getScore() {
+		return score;
+	}
+
+	public void setScore(double score) {
+		this.score = score;
+	}
+
 	public static List<Player> findPlayersSortedByScore() {
 		return Player.find("order by score desc").fetch();
 	}	

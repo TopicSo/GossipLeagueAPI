@@ -125,8 +125,8 @@ public class LeagueScoreEngineTest extends UnitTest{
 		createBasicGame(3, 1);
 		Game theGame = scoreEngine.evaluateFriendshipGame(game);
 		
-		assertEquals((PLAYER_A_BASIC_SCORE + 9.64), theGame.local.score, 1e-18);
-		assertEquals((PLAYER_B_BASIC_SCORE - 9.64), theGame.visitor.score, 1e-18);
+		assertDouble((PLAYER_A_BASIC_SCORE + 9.64), theGame.local.getScore());
+		assertDouble((PLAYER_B_BASIC_SCORE - 9.64), theGame.visitor.getScore());
 	}
 	
 	@Test
@@ -134,8 +134,8 @@ public class LeagueScoreEngineTest extends UnitTest{
 		createBasicGame(1, 3);
 		Game theGame = scoreEngine.evaluateFriendshipGame(game);
 			
-		assertEquals((PLAYER_A_BASIC_SCORE - 20.36), theGame.local.score, 1e-18);
-		assertEquals((PLAYER_B_BASIC_SCORE + 20.36), theGame.visitor.score, 1e-18);
+		assertDouble((PLAYER_A_BASIC_SCORE - 20.36), theGame.local.getScore());
+		assertDouble((PLAYER_B_BASIC_SCORE + 20.36), theGame.visitor.getScore());
 	}
 	
 	@Test
@@ -143,8 +143,8 @@ public class LeagueScoreEngineTest extends UnitTest{
 		createBasicGame(2, 2);
 		Game theGame = scoreEngine.evaluateFriendshipGame(game);
 			
-		assertEquals((PLAYER_A_BASIC_SCORE - 3.58), theGame.local.score, 1e-18);
-		assertEquals((PLAYER_B_BASIC_SCORE + 3.58), theGame.visitor.score, 1e-18);
+		assertDouble((PLAYER_A_BASIC_SCORE - 3.58), theGame.local.getScore());
+		assertDouble((PLAYER_B_BASIC_SCORE + 3.58), theGame.visitor.getScore());
 	}
 	
 	@Test
@@ -152,7 +152,7 @@ public class LeagueScoreEngineTest extends UnitTest{
 		createBasicGame(3, 1);
 		double gameResult = scoreEngine.gameResult(game, Player.Type.LOCAL);
 			
-		assertEquals(1, gameResult, 1e-18);
+		assertDouble(1, gameResult);
 	}
 	
 	@Test
@@ -160,7 +160,7 @@ public class LeagueScoreEngineTest extends UnitTest{
 		createBasicGame(3, 1);
 		double gameResult = scoreEngine.gameResult(game, Player.Type.VISITOR);
 			
-		assertEquals(0, gameResult, 1e-18);
+		assertDouble(0, gameResult);
 	}
 	
 	@Test
@@ -168,11 +168,16 @@ public class LeagueScoreEngineTest extends UnitTest{
 		createBasicGame(3, 3);
 		double gameResult = scoreEngine.gameResult(game, Player.Type.VISITOR);
 			
-		assertEquals(0.5, gameResult, 1e-18);
+		assertDouble(0.5, gameResult);
 	}
 	
 	private Game createBasicGame(int golsLocal, int golsVisitor) {
-		game = new Game(new Player(PLAYER_A_BASIC_SCORE), new Player(PLAYER_B_BASIC_SCORE), golsLocal, golsVisitor);
+		game = new Game(new Player("", "", PLAYER_A_BASIC_SCORE), new Player("", "", PLAYER_B_BASIC_SCORE), golsLocal, golsVisitor);
 		return game;
+	}
+	
+	private static void assertDouble(double d1, double d2){
+
+		assertEquals(d1, d2, 1e-18);
 	}
 }

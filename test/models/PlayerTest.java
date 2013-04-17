@@ -27,6 +27,6 @@ public class PlayerTest extends UnitTest {
     	
     	Player p = new Player(username, email);
     	
-    	assertTrue(p.score == Player.DEFAULT_SCORE);
+    	assertTrue(p.getScore() == Player.DEFAULT_SCORE);
     }
 }

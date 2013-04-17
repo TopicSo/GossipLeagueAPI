@@ -2,6 +2,7 @@ package managers;
 
 import models.Game;
 import models.Player;
+import utils.Utils;
 
 public class LeagueScoreEngine {	
 	public Game evaluateFriendshipGame(Game game) {		
@@ -20,18 +21,14 @@ public class LeagueScoreEngine {
 		double localPointsChange = pointsChange(game, Player.Type.LOCAL, K);
 		double visitorPointsChange = pointsChange(game, Player.Type.VISITOR, K);
 		
-		game.local.score += localPointsChange;
-		game.visitor.score += visitorPointsChange;
+		game.local.setScore(game.local.getScore() + localPointsChange);
+		game.visitor.setScore(game.visitor.getScore() + visitorPointsChange);
 		
 		return game;
 	}
 	
 	public double pointsChange(Game game, Player.Type playerType, int K) {
-		return twoDecimalDouble(K * gScore(game) * (gameResult(game, playerType) - expectedGameResult(game, playerType)));
-	}
-
-	private double twoDecimalDouble(double value) {
-		return Math.round(value*100)/100.0d;
+		return Utils.twoDecimalDouble(K * gScore(game) * (gameResult(game, playerType) - expectedGameResult(game, playerType)));
 	}
 	
 	public double gameResult(Game game, Player.Type playerType) {
@@ -72,6 +69,6 @@ public class LeagueScoreEngine {
 	}
 	
 	private double scoreDifference(Game game) {
-		return Math.abs(game.local.score - game.visitor.score);
+		return Math.abs(game.local.getScore() - game.visitor.getScore());
 	}
 }

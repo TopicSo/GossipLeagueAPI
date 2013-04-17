@@ -64,11 +64,11 @@ public class PlayerControllerTest extends FunctionalTest {
 	@Test
     public void playersRankingFirstPlayerHasMorePointsThanTheSecondOne() {
 		Player p1 = new Player("user1", "email1");
-		p1.score = 100;
+		p1.setScore(100);
 		p1.save();
 		
 		Player p2 = new Player("user2", "email2");
-		p2.score = 200;
+		p2.setScore(200);
 		p2.save();
 		
         response = GET("/players/ranking");
