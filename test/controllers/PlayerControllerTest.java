@@ -2,28 +2,13 @@ package controllers;
 
 import models.Player;
 
-import org.junit.Before;
 import org.junit.Test;
-
-import play.mvc.Http.Response;
-import play.test.Fixtures;
-import play.test.FunctionalTest;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-public class PlayerControllerTest extends FunctionalTest {
-    
-	private Response response;
-	
-	@Before
-    public void setupDatabaseAndResponse() {
-
-        Fixtures.deleteDatabase();
-        response = null;
-    }
-	
+public class PlayerControllerTest extends BaseControllerTest {
 
 	@Test
     public void playersRankingIsInJSON() {
