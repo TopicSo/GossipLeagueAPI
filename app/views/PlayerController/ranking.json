@@ -1,3 +1,10 @@
 {
-	"players":[]
+	"players":[
+	#{list players, as:'player' } 
+{
+	#{presenters/player player:player /}
+    }#{if !player_isLast},#{/if}
+
+#{/list}
+]
 }

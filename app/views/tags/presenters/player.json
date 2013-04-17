@@ -1,0 +1,2 @@
+"id": "${_player.getId()}",
+"username": "${_player.getUsername()}"
