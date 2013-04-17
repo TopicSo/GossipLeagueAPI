@@ -1,5 +1,7 @@
 package models;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -56,7 +58,7 @@ public class Player extends GenericModel{
 	}
 	
 	/*
-	 * Getters
+	 * Getter
 	 */
 
 	public String getEmail() {
@@ -65,5 +67,14 @@ public class Player extends GenericModel{
 	
 	public String getUsername() {
 		return this.username;
+	}
+
+	/*
+	 * Find 
+	 */
+	
+	public static List<Player> findPlayersSortedByScore() {
+
+		return null;
 	}	
 }
