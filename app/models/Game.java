@@ -17,6 +17,10 @@ import play.db.jpa.GenericModel;
 @Entity
 public class Game extends GenericModel{
 
+	public class GameInvalidModelException extends Exception{
+		
+	}
+	
     @Transient
     public static final int DEFAULT_RECS_PER_PAGE		= 20;
     
@@ -42,8 +46,12 @@ public class Game extends GenericModel{
     @Required
     private int golsVisitor;
 
-    public Game(Player localPlayer, Player visitorPlayer, int localGoals, int visitorGoals){
+    public Game(Player localPlayer, Player visitorPlayer, int localGoals, int visitorGoals) throws GameInvalidModelException{
     	super();
+    	
+    	if(localPlayer.equals(visitorPlayer)){
+    		throw new GameInvalidModelException();
+    	}
     	
     	this.local = localPlayer;
     	this.visitor = visitorPlayer;

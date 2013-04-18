@@ -1,16 +1,22 @@
 package managers;
 
 import models.Game;
+import models.Game.GameInvalidModelException;
 import models.Player;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import play.test.Fixtures;
 import play.test.UnitTest;
 
 public class BaseScoreEngineTest extends UnitTest{
 	public static final double PLAYER_A_BASIC_SCORE = 630.0;
 	public static final double PLAYER_B_BASIC_SCORE = 500.0;
+
+	public static final String PLAYER_A_USERNAME = "playerA";
+	public static final String PLAYER_B_USERNAME = "playerB";
 
 	protected Game game;
 	
@@ -19,13 +25,28 @@ public class BaseScoreEngineTest extends UnitTest{
 		game = createBasicGame(0, 0);
 	}
 	
+	@After
+	public void deleteDatabase(){
+		Fixtures.deleteDatabase();
+	}
+	
     @Test
     public void aVeryImportantThingToTest() {
         assertTrue(true);
     }
 	
 	protected Game createBasicGame(int golsLocal, int golsVisitor) {
-		game = new Game(new Player("", "", PLAYER_A_BASIC_SCORE), new Player("", "", PLAYER_B_BASIC_SCORE), golsLocal, golsVisitor);
+		Player playerA = new Player(PLAYER_A_USERNAME, "", PLAYER_A_BASIC_SCORE);
+		playerA.save();
+		Player playerB = new Player(PLAYER_B_USERNAME, "", PLAYER_B_BASIC_SCORE);
+		playerB.save();
+		
+		try {
+			game = new Game(playerA, playerB, golsLocal, golsVisitor);
+		} catch (GameInvalidModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return game;
 	}
 	

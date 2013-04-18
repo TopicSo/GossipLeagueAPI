@@ -46,7 +46,17 @@ public class Player extends GenericModel{
 
 	private int countDraws;
 
+	private int countScoredGoals;
+	
+	private int countConcededGoals;
+
 	private double score;
+	
+	public Player(double score) { 
+		super();
+		
+		this.score = score;
+	}
 	
 	public Player(String username, String email, double score) { 
 		this(username, email);
@@ -87,13 +97,60 @@ public class Player extends GenericModel{
     	return score;
     }
     
+    public int getCountGames() {
+		return countGames;
+	}
+    
+    public int getCountWins() {
+		return countWins;
+	}
+    
+    public int getCountLosts() {
+		return countLosts;
+	}
+    
+	public int getCountDraws() {
+		return countDraws;
+	}
+	
+	public int getCountScoredGoals() {
+		return countScoredGoals;
+	}
+	
+	public int getCountConcededGoals() {
+		return countConcededGoals;
+	}
+	
 	/*
 	 * Setter 
 	 */
 	
-
 	public void setScore(double score) {
 		this.score = score;
+	}
+	
+	public void setCountGames(int countGames) {
+		this.countGames = countGames;
+	}
+	
+	public void setCountWins(int countWins) {
+		this.countWins = countWins;
+	}
+	
+	public void setCountLosts(int countLosts) {
+		this.countLosts = countLosts;
+	}
+
+	public void setCountDraws(int countDraws) {
+		this.countDraws = countDraws;
+	}
+
+	public void setCountScoredGoals(int countScoredGoals) {
+		this.countScoredGoals = countScoredGoals;
+	}
+
+	public void setCountConcededGoals(int countConcededGoals) {
+		this.countConcededGoals = countConcededGoals;
 	}
 
 	/*
