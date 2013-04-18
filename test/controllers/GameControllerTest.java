@@ -182,7 +182,7 @@ public class GameControllerTest extends BaseControllerTest {
 		assertEquals(0, parsedLocal.getAsJsonPrimitive("countDraws").getAsInt());
 		assertEquals(0, parsedLocal.getAsJsonPrimitive("countScoredGoals").getAsInt());
 		assertEquals(5, parsedLocal.getAsJsonPrimitive("countConcededGoals").getAsInt());
-		assertNotSame(Player.DEFAULT_SCORE, parsedLocal.getAsJsonPrimitive("score").getAsInt());
+		assertNotSame(Player.DEFAULT_SCORE, parsedLocal.getAsJsonPrimitive("score").getAsDouble());
 		
 		assertEquals(1, parsedVisitor.getAsJsonPrimitive("countGames").getAsInt());
 		assertEquals(1, parsedVisitor.getAsJsonPrimitive("countWins").getAsInt());
@@ -190,6 +190,6 @@ public class GameControllerTest extends BaseControllerTest {
 		assertEquals(0, parsedVisitor.getAsJsonPrimitive("countDraws").getAsInt());
 		assertEquals(5, parsedVisitor.getAsJsonPrimitive("countScoredGoals").getAsInt());
 		assertEquals(0, parsedVisitor.getAsJsonPrimitive("countConcededGoals").getAsInt());
-		assertNotSame(Player.DEFAULT_SCORE, parsedVisitor.getAsJsonPrimitive("score").getAsInt());
+		assertNotSame(Player.DEFAULT_SCORE, parsedVisitor.getAsJsonPrimitive("score").getAsDouble());
 	}
 }
