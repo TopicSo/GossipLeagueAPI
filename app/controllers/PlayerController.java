@@ -2,10 +2,7 @@ package controllers;
 
 import java.util.List;
 
-import com.thoughtworks.xstream.alias.ClassMapper.Null;
-
 import models.Player;
-import play.Logger;
 import play.data.validation.Required;
 import play.mvc.Controller;
 
