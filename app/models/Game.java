@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -16,6 +17,9 @@ import play.db.jpa.GenericModel;
 @Entity
 public class Game extends GenericModel{
 
+    @Transient
+    public static final int DEFAULT_RECS_PER_PAGE		= 20;
+    
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -97,16 +101,19 @@ public class Game extends GenericModel{
 		this.golsVisitor = golsVisitor;
 	}
 
-	public static List<Game> findGamesBetween(Player player1, Player player2) {
-		
+	public static List<Game> findGamesBetween(Player player1, Player player2,
+			int page, int recsPerPage) {
+
+		int start = recsPerPage * page;
+
 		if(player1 == null && player2 == null){
 			return Game.findAll();
 		} else if(player1 == null){
-			return Game.find("local = ? OR visitor = ? order by new_created desc", player1, player1).fetch();
+			return Game.find("local = ? OR visitor = ? order by new_created desc", player2, player2).from(start).fetch(recsPerPage);
 		} else if(player2 == null){
-			return Game.find("local = ? OR visitor = ? order by new_created desc", player2, player2).fetch();
+			return Game.find("local = ? OR visitor = ? order by new_created desc", player1, player1).from(start).fetch(recsPerPage);
 		} else{
-			return Game.find("(local = ? AND visitor = ?) OR (local = ? AND visitor = ?) order by new_created desc", player1, player2, player2, player1).fetch();
+			return Game.find("(local = ? AND visitor = ?) OR (local = ? AND visitor = ?) order by new_created desc", player1, player2, player2, player1).from(start).fetch(recsPerPage);
 		}
 	}
 }

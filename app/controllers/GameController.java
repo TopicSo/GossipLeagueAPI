@@ -5,12 +5,11 @@ import java.util.List;
 import managers.LeagueScoreEngine;
 import models.Game;
 import models.Player;
-import play.Logger;
 import play.mvc.Controller;
 
 public class GameController extends Controller {
 
-	public static void list(String player1Id, String player2Id){
+	public static void list(String player1Id, String player2Id, int page, int recsPerPage){
 		Player player1 = null;
 		Player player2 = null;
 		List<Game> games = null;
@@ -22,8 +21,11 @@ public class GameController extends Controller {
 		if(player2Id != null){
 			player2 = Player.findById(player2Id);
 		}
-		
-		games = Game.findGamesBetween(player1, player2);
+
+        if(recsPerPage == 0)
+        	recsPerPage = Game.DEFAULT_RECS_PER_PAGE;
+
+		games = Game.findGamesBetween(player1, player2, page, recsPerPage);
 		
 		render(games);
 	}

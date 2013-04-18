@@ -5,8 +5,6 @@ import models.Player;
 
 import org.junit.Test;
 
-import play.Logger;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -20,8 +18,8 @@ public class GameControllerTest extends BaseControllerTest {
 
     	JsonParser parser = new JsonParser();
         JsonArray games = parser.parse(response.out.toString()).getAsJsonObject().getAsJsonArray("games");
-        
-        assertTrue(games.size() == 0);
+
+        assertEquals(0, games.size());
 	}
 	
 	@Test
@@ -39,7 +37,7 @@ public class GameControllerTest extends BaseControllerTest {
     	JsonParser parser = new JsonParser();
         JsonArray games = parser.parse(response.out.toString()).getAsJsonObject().getAsJsonArray("games");
         
-        assertTrue(games.size() == 1);
+        assertEquals(1, games.size());
 	}
 	
 	@Test
@@ -61,11 +59,10 @@ public class GameControllerTest extends BaseControllerTest {
 		otherGame.save();
 		
 		response = GET("/games?player1Id=" + localPlayer.getId() + "&player2Id=" + visitorPlayer.getId());
-		Logger.info("response " + response.out.toString());
     	JsonParser parser = new JsonParser();
         JsonArray games = parser.parse(response.out.toString()).getAsJsonObject().getAsJsonArray("games");
-        
-        assertTrue(games.size() == 2);
+
+        assertEquals(2, games.size());
         
         // Ordered correctly ?
         JsonObject firstGame = games.get(0).getAsJsonObject();        
@@ -75,14 +72,37 @@ public class GameControllerTest extends BaseControllerTest {
         long secondGamePlayedOn = secondGame.getAsJsonPrimitive("playedOn").getAsLong();
         assertTrue(firstGamePlayedOn > secondGamePlayedOn);
 	}
+
+	@Test
+	public void pagingGames(){
+		Player localPlayer = new Player("local", "localmail");
+		localPlayer.save();
+		Player visitorPlayer = new Player("visitor", "visitormail");
+		visitorPlayer.save();
+		Player otherPlayer = new Player("other", "othermail");
+		otherPlayer.save();
+		
+		Game game = new Game(localPlayer, visitorPlayer, 2, 3);
+		game.save();
+		Game game2 = new Game(visitorPlayer, localPlayer, 2, 0);
+		game2.save();
+		Game otherGame = new Game(otherPlayer, visitorPlayer, 2, 3);
+		otherGame.save();
+		Game anotherGame = new Game(visitorPlayer, otherPlayer, 2, 3);
+		anotherGame.save();
+
+		response = GET("/games?player1Id=" + visitorPlayer.getId() + "&page=1&recsPerPage=1");				
+		JsonParser parser = new JsonParser();
+        JsonArray games = parser.parse(response.out.toString()).getAsJsonObject().getAsJsonArray("games");
+        
+        assertEquals(1, games.size());
+	}
 	
 	/*
-	 *
-	 * - paginacion de games
 	 * - añadir un game sin algun parametro basico lanza excepcion
 	 * - añadir un game con uno mismo
-	 * - añadir un game
-	 * - añadir un game, asegurarse que el score no es el default
+	 * - añadir un game ok
+	 * - añadir un game, asegurarse que el score no es el default 	
 	 * 
 	 */
 }
