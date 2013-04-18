@@ -1,6 +1,10 @@
 package controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import models.Game;
+import models.Game.GameInvalidModelException;
 import models.Player;
 
 import org.junit.Test;
@@ -23,7 +27,7 @@ public class GameControllerTest extends BaseControllerTest {
 	}
 	
 	@Test
-	public void OneGameReturnsOneGame(){
+	public void OneGameReturnsOneGame() throws GameInvalidModelException{
 		Player localPlayer = new Player("local", "localmail");
 		localPlayer.save();
 		Player visitorPlayer = new Player("visitor", "visitormail");
@@ -41,7 +45,7 @@ public class GameControllerTest extends BaseControllerTest {
 	}
 	
 	@Test
-	public void gamesBetweenTwoPlayers(){
+	public void gamesBetweenTwoPlayers() throws GameInvalidModelException{
 		Player localPlayer = new Player("local", "localmail");
 		localPlayer.save();
 		Player visitorPlayer = new Player("visitor", "visitormail");
@@ -74,7 +78,7 @@ public class GameControllerTest extends BaseControllerTest {
 	}
 
 	@Test
-	public void pagingGames(){
+	public void pagingGames() throws GameInvalidModelException{
 		Player localPlayer = new Player("local", "localmail");
 		localPlayer.save();
 		Player visitorPlayer = new Player("visitor", "visitormail");
@@ -97,12 +101,95 @@ public class GameControllerTest extends BaseControllerTest {
         
         assertEquals(1, games.size());
 	}
+
+	@Test
+	public void postAGameWithoutParametersKO(){
+		Map parameters = new HashMap<String, String>();
+        
+		response = POST("/games", parameters);
+		
+    	JsonParser parser = new JsonParser();
+        JsonObject addedGame = parser.parse(response.out.toString()).getAsJsonObject();
+        
+		assertEquals(false, addedGame.getAsJsonPrimitive("added").getAsBoolean());
+	}
 	
-	/*
-	 * - añadir un game sin algun parametro basico lanza excepcion
-	 * - añadir un game con uno mismo
-	 * - añadir un game ok
-	 * - añadir un game, asegurarse que el score no es el default 	
-	 * 
-	 */
+	@Test
+	public void postAGameWithSamePlayerKO(){
+		Player player = new Player("user", "email");
+		player.save();
+		
+		Map parameters = new HashMap<String, String>();
+        parameters.put("localPlayerId", player.getId());
+        parameters.put("visitorPlayerId", player.getId());
+        
+		response = POST("/games", parameters);
+		
+    	JsonParser parser = new JsonParser();
+        JsonObject addedGame = parser.parse(response.out.toString()).getAsJsonObject();
+        
+		assertEquals(false, addedGame.getAsJsonPrimitive("added").getAsBoolean());
+	}
+	
+	@Test
+	public void postAGameReturnAGame(){
+		Player local = new Player("local", "localemail");
+		local.save();
+
+		Player visitor = new Player("visitor", "visitoremail");
+		visitor.save();
+
+		Map parameters = new HashMap<String, String>();
+        parameters.put("localPlayerId", local.getId());
+        parameters.put("visitorPlayerId", visitor.getId());
+        parameters.put("localGoals", "0");
+        parameters.put("visitorGoals", "5");
+        
+		response = POST("/games", parameters);
+		
+		
+    	JsonParser parser = new JsonParser();
+        JsonObject addedGame = parser.parse(response.out.toString()).getAsJsonObject();
+        
+        assertNotNull(addedGame.getAsJsonObject("game"));
+	}
+	
+	@Test 
+	public void postAGameChangingPlayerStats(){
+		Player local = new Player("local", "localemail");
+		local.save();
+
+		Player visitor = new Player("visitor", "visitoremail");
+		visitor.save();
+
+		Map parameters = new HashMap<String, String>();
+        parameters.put("localPlayerId", local.getId());
+        parameters.put("visitorPlayerId", visitor.getId());
+        parameters.put("localGoals", "0");
+        parameters.put("visitorGoals", "5");
+        
+		response = POST("/games", parameters);	
+		
+    	JsonParser parser = new JsonParser();
+        JsonObject addedGame = parser.parse(response.out.toString()).getAsJsonObject();
+        
+        JsonObject parsedLocal = addedGame.getAsJsonObject("game").getAsJsonObject("local");
+        JsonObject parsedVisitor = addedGame.getAsJsonObject("game").getAsJsonObject("visitor");
+		assertEquals(false, addedGame.getAsJsonPrimitive("added").getAsBoolean());
+		assertEquals(1, parsedLocal.getAsJsonPrimitive("countGames").getAsInt());
+		assertEquals(0, parsedLocal.getAsJsonPrimitive("countWins").getAsInt());
+		assertEquals(1, parsedLocal.getAsJsonPrimitive("countLosts").getAsInt());
+		assertEquals(0, parsedLocal.getAsJsonPrimitive("countDraws").getAsInt());
+		assertEquals(0, parsedLocal.getAsJsonPrimitive("countScoredGoals").getAsInt());
+		assertEquals(5, parsedLocal.getAsJsonPrimitive("countConcededGoals").getAsInt());
+		assertNotSame(Player.DEFAULT_SCORE, parsedLocal.getAsJsonPrimitive("score").getAsInt());
+		
+		assertEquals(1, parsedVisitor.getAsJsonPrimitive("countGames").getAsInt());
+		assertEquals(1, parsedVisitor.getAsJsonPrimitive("countWins").getAsInt());
+		assertEquals(0, parsedVisitor.getAsJsonPrimitive("countLosts").getAsInt());
+		assertEquals(0, parsedVisitor.getAsJsonPrimitive("countDraws").getAsInt());
+		assertEquals(5, parsedVisitor.getAsJsonPrimitive("countScoredGoals").getAsInt());
+		assertEquals(0, parsedVisitor.getAsJsonPrimitive("countConcededGoals").getAsInt());
+		assertNotSame(Player.DEFAULT_SCORE, parsedVisitor.getAsJsonPrimitive("score").getAsInt());
+	}
 }

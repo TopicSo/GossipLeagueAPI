@@ -1,0 +1,8 @@
+{
+	"added":${added}
+#{if game != null },
+	"game": {
+		#{presenters/game game:game /}
+	}
+#{/if}
+}

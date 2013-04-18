@@ -15,5 +15,6 @@ GET     /public/                                staticDir:public
 GET		/players/ranking/?						PlayerController.ranking(format:'json')
 POST	/players/?								PlayerController.addPlayer(format:'json')
 
-# PLayers
+# Games
 GET		/games/?								GameController.list(format:'json')
+POST	/games/?								GameController.addGame(format:'json')

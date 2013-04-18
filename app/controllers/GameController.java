@@ -4,7 +4,9 @@ import java.util.List;
 
 import managers.LeagueScoreEngine;
 import models.Game;
+import models.Game.GameInvalidModelException;
 import models.Player;
+import play.data.validation.Required;
 import play.mvc.Controller;
 
 public class GameController extends Controller {
@@ -30,21 +32,38 @@ public class GameController extends Controller {
 		render(games);
 	}
 	
-    public static void addGame(String localPlayerId, String visitorPlayerId, int localGoals, int visitorGoals) throws Exception{
-
+    public static void addGame(@Required String localPlayerId, @Required String visitorPlayerId, @Required int localGoals, @Required int visitorGoals) throws Exception{
+    	boolean added = false;
+    	Game game = null;
+    	
+    	if(localPlayerId == null || visitorPlayerId == null){
+    		render(added, game);
+    	}
+    
     	Player local = Player.findById(localPlayerId);
     	Player visitor = Player.findById(visitorPlayerId);
     	
     	if(local == null || visitor == null){
     		throw new Exception("Unexpected Players");
     	}
-    	
-    	Game game = new Game(local, visitor, localGoals, visitorGoals);
-    	game.save();
+   
+    	try{    		
+    		game = new Game(local, visitor, localGoals, visitorGoals);
+    		game.save();
+    	}
+    	catch(GameInvalidModelException e){
+    		render(added, game);
+    	}
     
     	LeagueScoreEngine scoreEngine = new LeagueScoreEngine();
     	scoreEngine.evaluateFriendshipGame(game);
     	
-        render(game);
+    	game.save();
+    	
+    	// update stats
+    	local.save();
+    	visitor.save();
+    	
+        render(added, game);
     }
 }

@@ -1,3 +1,9 @@
 "id": "${_player.getId()}",
 "username": "${_player.getUsername()}",
-"score": "${_player.score}"
+"score": ${_player.score},
+"countGames": ${_player.getCountGames()},
+"countWins": ${_player.getCountWins()},
+"countLosts": ${_player.getCountLosts()},
+"countDraws": ${_player.getCountDraws()},
+"countScoredGoals": ${_player.getCountScoredGoals()},
+"countConcededGoals": ${_player.getCountConcededGoals()}
