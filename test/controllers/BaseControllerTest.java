@@ -1,13 +1,16 @@
 package controllers;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.google.gson.JsonParser;
 
 import play.mvc.Http.Response;
 import play.test.Fixtures;
 import play.test.FunctionalTest;
 
-public class BaseControllerTest extends FunctionalTest {
+public abstract class BaseControllerTest extends FunctionalTest {
 
 	protected Response response;
 	
@@ -17,9 +20,16 @@ public class BaseControllerTest extends FunctionalTest {
         Fixtures.deleteDatabase();
         response = null;
     }
-	
-	@Test
-    public void aVeryImportantThingToTest() {
-        assertTrue(true);
+
+    @After
+    public void checkJsonContentType() {
+
+        assertContentType("application/json", response);
+    }
+
+    @After
+    public void checkValidJson() {
+
+        new JsonParser().parse(response.out.toString());
     }
 }

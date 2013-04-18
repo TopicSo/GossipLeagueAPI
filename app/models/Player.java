@@ -79,6 +79,10 @@ public class Player extends GenericModel{
 		return this.email;
 	}
 
+    public long getCreationDateSeconds() {
+        return (this.new_created / 1000l);
+    }
+    
 	/*
 	 * Find 
 	 */

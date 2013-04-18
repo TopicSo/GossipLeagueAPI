@@ -1,5 +1,8 @@
 package models;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -26,6 +29,9 @@ public class Game extends GenericModel{
     @ManyToOne
     private Player visitor;
 	
+	@Required
+    public long new_created;
+    
     @Required
     private int golsLocal;
     
@@ -39,6 +45,8 @@ public class Game extends GenericModel{
     	this.visitor = visitorPlayer;
     	this.golsLocal = localGoals;
     	this.golsVisitor = visitorGoals;
+    	
+		this.new_created = new Date().getTime();
     }
     
     /*
@@ -65,6 +73,10 @@ public class Game extends GenericModel{
     	return golsVisitor;
     }
 
+    public long getPlayedOnDateSeconds() {
+        return (this.new_created / 1000l);
+    }
+    
     /*
      * Setter
      */
@@ -83,5 +95,18 @@ public class Game extends GenericModel{
 
 	public void setGolsVisitor(int golsVisitor) {
 		this.golsVisitor = golsVisitor;
+	}
+
+	public static List<Game> findGamesBetween(Player player1, Player player2) {
+		
+		if(player1 == null && player2 == null){
+			return Game.findAll();
+		} else if(player1 == null){
+			return Game.find("local = ? OR visitor = ? order by new_created desc", player1, player1).fetch();
+		} else if(player2 == null){
+			return Game.find("local = ? OR visitor = ? order by new_created desc", player2, player2).fetch();
+		} else{
+			return Game.find("(local = ? AND visitor = ?) OR (local = ? AND visitor = ?) order by new_created desc", player1, player2, player2, player1).fetch();
+		}
 	}
 }

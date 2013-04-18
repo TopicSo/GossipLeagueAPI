@@ -1,4 +1,5 @@
 "id": "${_game.getId()}",
+"playedOn": ${_game.getPlayedOnDateSeconds()},
 "local": {
 #{presenters/player player:_game.getLocal() /}
 },
