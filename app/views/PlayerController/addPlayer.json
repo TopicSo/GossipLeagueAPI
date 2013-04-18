@@ -1,0 +1,8 @@
+{
+	"added":${added}
+#{if player != null },
+	"player":{
+		#{presenters/player player:player /}
+	}
+#{/if}
+}

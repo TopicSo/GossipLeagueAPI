@@ -83,19 +83,32 @@ public class Player extends GenericModel{
         return (this.new_created / 1000l);
     }
     
+    public double getScore() {
+    	return score;
+    }
+    
 	/*
-	 * Find 
+	 * Setter 
 	 */
 	
-	public double getScore() {
-		return score;
-	}
 
 	public void setScore(double score) {
 		this.score = score;
 	}
 
+	/*
+	 * Find
+	 */
+	
 	public static List<Player> findPlayersSortedByScore() {
 		return Player.find("order by score desc").fetch();
-	}	
+	}
+
+	public static Player findByUsername(String username) {
+		return Player.find("username = ?", username).first();
+	}
+	
+	public static Player findByEmail(String email) {
+		return Player.find("email = ?", email).first();
+	}
 }

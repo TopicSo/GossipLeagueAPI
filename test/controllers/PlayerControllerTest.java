@@ -1,5 +1,8 @@
 package controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import models.Player;
 
 import org.junit.Test;
@@ -28,7 +31,7 @@ public class PlayerControllerTest extends BaseControllerTest {
     	JsonParser parser = new JsonParser();
         JsonArray players = parser.parse(response.out.toString()).getAsJsonObject().getAsJsonArray("players");
         
-        assertTrue(players.size() == 0);
+        assertEquals(0, players.size());
     }
 	
 	@Test
@@ -43,7 +46,7 @@ public class PlayerControllerTest extends BaseControllerTest {
 
     	JsonParser parser = new JsonParser();
         JsonArray players = parser.parse(response.out.toString()).getAsJsonObject().getAsJsonArray("players");
-        assertTrue(players.size() == 1);
+        assertEquals(1, players.size());
     }
 
 	@Test
@@ -70,4 +73,68 @@ public class PlayerControllerTest extends BaseControllerTest {
         
         assertTrue(first.getAsJsonPrimitive("score").getAsDouble() > second.getAsJsonPrimitive("score").getAsDouble());
     }
+	
+	@Test
+	public void addAPlayerWithoutParametersKO(){
+	    Map parameters = new HashMap<String, String>();
+        
+		response = POST("/players", parameters);
+		
+    	JsonParser parser = new JsonParser();
+        JsonObject addedPlayer = parser.parse(response.out.toString()).getAsJsonObject();
+        
+		assertEquals(false, addedPlayer.getAsJsonPrimitive("added").getAsBoolean());
+	}
+	
+	@Test
+	public void addAPlayerReturnsOk(){
+		String newUsername = "usuario";
+        Map parameters = new HashMap<String, String>();
+        parameters.put("username", newUsername);
+        parameters.put("email", "email");
+        
+		response = POST("/players", parameters);
+    	JsonParser parser = new JsonParser();
+        JsonObject addedPlayer = parser.parse(response.out.toString()).getAsJsonObject();
+
+		assertEquals(true, addedPlayer.getAsJsonPrimitive("added").getAsBoolean());        
+		assertEquals(newUsername, addedPlayer.getAsJsonObject("player").getAsJsonPrimitive("username").getAsString());
+	}
+	
+	@Test
+	public void addAPlayerWithAEmailAlreadyUserdKO(){
+		String newUsername = "usuario";
+		
+		Player p1 = new Player(newUsername, "asdasd");
+		p1.save();
+		
+        Map parameters = new HashMap<String, String>();
+        parameters.put("username", newUsername);
+        parameters.put("email", "email");
+        
+		response = POST("/players", parameters);
+		
+    	JsonParser parser = new JsonParser();
+        JsonObject addedPlayer = parser.parse(response.out.toString()).getAsJsonObject();
+
+		assertEquals(false, addedPlayer.getAsJsonPrimitive("added").getAsBoolean());        
+	}
+	
+	@Test
+	public void addAPlayerWorks(){
+        Map parameters = new HashMap<String, String>();
+        parameters.put("username", "usuario");
+        parameters.put("email", "email");
+        
+		response = POST("/players", parameters);
+        response = GET("/players/ranking");
+        
+        assertIsOk(response);
+        assertContentType("application/json", response);
+
+    	JsonParser parser = new JsonParser();
+        JsonArray players = parser.parse(response.out.toString()).getAsJsonObject().getAsJsonArray("players");
+        
+        assertEquals(1, players.size());
+	}
 }
