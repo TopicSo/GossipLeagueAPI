@@ -11,6 +11,9 @@ GET     /favicon.ico                            404
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 
+# CRUD routes
+*      /depares									module:crud
+
 # PLayers
 GET		/players/ranking/?						PlayerController.ranking(format:'json')
 POST	/players/?								PlayerController.addPlayer(format:'json')
