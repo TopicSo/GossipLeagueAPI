@@ -26,6 +26,14 @@ import org.junit.Test;
 | Total (P)	| +9.64		-9.64	| -20.37	+20.37	| -3.58		+3.58	|
 -------------------------------------------------------------------------
 
+-------------------------------------------------------------------------
+| 			| B			C 		| B			C		| B			C		|
+-------------------------------------------------------------------------
+| Score		| 3  		1		| 1 		3		| 2 		2		|
+| K			| 20		20		| 20		20		| 20		20		|
+| Total (P)	| +14.13	-14.13	| -15.87	+15.87	| -0.58		+0.58	|
+-------------------------------------------------------------------------
+
 */
 public class LeagueScoreEngineTest extends BaseScoreEngineTest{
 	
@@ -67,7 +75,7 @@ public class LeagueScoreEngineTest extends BaseScoreEngineTest{
 	
 	@Test
 	public void testCase1() {
-		createBasicGame(3, 1);
+		createBasicGameAB(3, 1);
 		Game theGame = scoreEngine.evaluateFriendshipGame(game);
 		
 		assertDouble((PLAYER_A_BASIC_SCORE + 9.64), theGame.getLocal().getScore());
@@ -76,7 +84,7 @@ public class LeagueScoreEngineTest extends BaseScoreEngineTest{
 	
 	@Test
 	public void testCase2() {
-		createBasicGame(1, 3);
+		createBasicGameAB(1, 3);
 		Game theGame = scoreEngine.evaluateFriendshipGame(game);
 			
 		assertDouble((PLAYER_A_BASIC_SCORE - 20.36), theGame.getLocal().getScore());
@@ -85,10 +93,55 @@ public class LeagueScoreEngineTest extends BaseScoreEngineTest{
 	
 	@Test
 	public void testCase3() {
-		createBasicGame(2, 2);
+		createBasicGameAB(2, 2);
 		Game theGame = scoreEngine.evaluateFriendshipGame(game);
 			
 		assertDouble((PLAYER_A_BASIC_SCORE - 3.58), theGame.getLocal().getScore());
 		assertDouble((PLAYER_B_BASIC_SCORE + 3.58), theGame.getVisitor().getScore());
+	}
+	
+	@Test
+	public void testCase4() {
+		createBasicGameBC(3, 1);
+		Game theGame = scoreEngine.evaluateFriendshipGame(game);
+			
+		assertDouble((PLAYER_B_BASIC_SCORE + 14.14), theGame.getLocal().getScore());
+		assertDouble((PLAYER_C_BASIC_SCORE - 14.14), theGame.getVisitor().getScore());
+	}
+	
+	@Test
+	public void testCase5() {
+		createBasicGameBC(1, 3);
+		Game theGame = scoreEngine.evaluateFriendshipGame(game);
+			
+		assertDouble((PLAYER_B_BASIC_SCORE - 15.86), theGame.getLocal().getScore());
+		assertDouble((PLAYER_C_BASIC_SCORE + 15.86), theGame.getVisitor().getScore());
+	}
+	
+	@Test
+	public void testCase5Reverse() {
+		createBasicGameCB(3, 1);
+		Game theGame = scoreEngine.evaluateFriendshipGame(game);
+			
+		assertDouble((PLAYER_C_BASIC_SCORE + 15.86), theGame.getLocal().getScore());
+		assertDouble((PLAYER_B_BASIC_SCORE - 15.86), theGame.getVisitor().getScore());
+	}
+	
+	@Test
+	public void testCase6() {
+		createBasicGameBC(2, 2);
+		Game theGame = scoreEngine.evaluateFriendshipGame(game);
+			
+		assertDouble((PLAYER_B_BASIC_SCORE - 0.58), theGame.getLocal().getScore());
+		assertDouble((PLAYER_C_BASIC_SCORE + 0.58), theGame.getVisitor().getScore());
+	}
+	
+	@Test
+	public void testCase6Reverse() {
+		createBasicGameCB(2, 2);
+		Game theGame = scoreEngine.evaluateFriendshipGame(game);
+			
+		assertDouble((PLAYER_C_BASIC_SCORE + 0.58), theGame.getLocal().getScore());
+		assertDouble((PLAYER_B_BASIC_SCORE - 0.58), theGame.getVisitor().getScore());
 	}
 }

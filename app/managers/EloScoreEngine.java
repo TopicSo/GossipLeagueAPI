@@ -23,12 +23,33 @@ public class EloScoreEngine {
 	}
 	
 	public static double expectedGameResult(Game game, Player.Type playerType) {
-		double localExpectedGameResult = 1.0/(Math.pow(10, -(double)scoreDifference(game)/400) + 1);
-		if (playerType == Player.Type.LOCAL) {
-			return localExpectedGameResult;
-		} else {
-			return 1 - localExpectedGameResult;
+		double expectedGameResult = 1.0/(Math.pow(10, -(double)scoreDifference(game)/400) + 1);
+		
+		if (isLocalPlayerStronger(game)) {
+			if (playerType == Player.Type.LOCAL) {
+				return Math.max(expectedGameResult, 1 - expectedGameResult);
+			} else {
+				return Math.min(expectedGameResult, 1 - expectedGameResult);
+			}
 		}
+		
+		if (isVisitorPlayerStronger(game)) {
+			if (playerType == Player.Type.LOCAL) {
+				return Math.min(expectedGameResult, 1 - expectedGameResult);
+			} else {
+				return Math.max(expectedGameResult, 1 - expectedGameResult);
+			}
+		}
+		
+		return expectedGameResult;
+	}
+
+	private static boolean isLocalPlayerStronger(Game game) {
+		return game.getLocal().getScore() > game.getVisitor().getScore();
+	}
+	
+	private static boolean isVisitorPlayerStronger(Game game) {
+		return game.getLocal().getScore() < game.getVisitor().getScore();
 	}
 	
 	private static double gScore(Game game) {

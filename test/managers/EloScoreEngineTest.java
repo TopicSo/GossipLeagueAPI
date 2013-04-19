@@ -38,7 +38,7 @@ public class EloScoreEngineTest extends BaseScoreEngineTest{
 	}
 	@Test
 	public void testExpectedGameResultIsCorrectForLocal() { 
-		createBasicGame(3, 1);
+		createBasicGameAB(3, 1);
 		double expectedGameResult = eloEngine.expectedGameResult(game, Player.Type.LOCAL);
 		
 		assertEquals(0.68, expectedGameResult, 1e-2);
@@ -46,7 +46,7 @@ public class EloScoreEngineTest extends BaseScoreEngineTest{
 	
 	@Test
 	public void testExpectedGameResultIsCorrectForVisitor() { 
-		createBasicGame(3, 1);
+		createBasicGameAB(3, 1);
 		double expectedGameResult = eloEngine.expectedGameResult(game, Player.Type.VISITOR);
 		
 		assertEquals(0.32, expectedGameResult, 1e-2);
@@ -54,7 +54,7 @@ public class EloScoreEngineTest extends BaseScoreEngineTest{
 	
 	@Test
 	public void testPointsChangeForLocalIsCorrect() { 
-		createBasicGame(3, 1);
+		createBasicGameAB(3, 1);
 		double pointsChange = eloEngine.pointsChange(game, Player.Type.LOCAL, 20);
 		
 		assertEquals(9.64, pointsChange, 1e-2);
@@ -62,7 +62,7 @@ public class EloScoreEngineTest extends BaseScoreEngineTest{
 	
 	@Test
 	public void testPointsChangeForVisitorlIsCorrect() { 
-		createBasicGame(3, 1);
+		createBasicGameAB(3, 1);
 		double pointsChange = eloEngine.pointsChange(game, Player.Type.VISITOR, 20);
 		
 		assertEquals(-9.64, pointsChange, 1e-2);
@@ -70,7 +70,7 @@ public class EloScoreEngineTest extends BaseScoreEngineTest{
 	
 	@Test
 	public void testPointsChangeForLocalIsCorrect2() { 
-		createBasicGame(1, 3);
+		createBasicGameAB(1, 3);
 		double pointsChange = eloEngine.pointsChange(game, Player.Type.LOCAL, 20);
 		
 		assertEquals(-20.36, pointsChange, 1e-2);
@@ -78,7 +78,7 @@ public class EloScoreEngineTest extends BaseScoreEngineTest{
 	
 	@Test
 	public void testPointsChangeForVisitorlIsCorrect2() { 
-		createBasicGame(1, 3);
+		createBasicGameAB(1, 3);
 		double pointsChange = eloEngine.pointsChange(game, Player.Type.VISITOR, 20);
 		
 		assertEquals(20.36, pointsChange, 1e-2);
@@ -86,7 +86,7 @@ public class EloScoreEngineTest extends BaseScoreEngineTest{
 	
 	@Test
 	public void testGameResultForWinner() {
-		createBasicGame(3, 1);
+		createBasicGameAB(3, 1);
 		double gameResult = eloEngine.gameResult(game, Player.Type.LOCAL);
 			
 		assertDouble(1, gameResult);
@@ -94,7 +94,7 @@ public class EloScoreEngineTest extends BaseScoreEngineTest{
 	
 	@Test
 	public void testGameResultForLoser() {
-		createBasicGame(3, 1);
+		createBasicGameAB(3, 1);
 		double gameResult = eloEngine.gameResult(game, Player.Type.VISITOR);
 			
 		assertDouble(0, gameResult);
@@ -102,7 +102,7 @@ public class EloScoreEngineTest extends BaseScoreEngineTest{
 	
 	@Test
 	public void testGameResultForDrawn() {
-		createBasicGame(3, 3);
+		createBasicGameAB(3, 3);
 		double gameResult = eloEngine.gameResult(game, Player.Type.VISITOR);
 			
 		assertDouble(0.5, gameResult);
