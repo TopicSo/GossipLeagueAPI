@@ -1,0 +1,1 @@
+curl -X POST http://gossip-league-api.herokuapp.com/players -d "username=$1&email=$2"

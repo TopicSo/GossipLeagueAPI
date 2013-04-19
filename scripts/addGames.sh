@@ -1,0 +1,1 @@
+curl -X POST http://gossip-league-api.herokuapp.com/games -d "localPlayer=$1&visitorPlayer=$2&localGoals=$3&visitorGoals=$4"
