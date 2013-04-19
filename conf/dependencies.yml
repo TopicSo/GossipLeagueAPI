@@ -3,3 +3,6 @@
 require:
     - play
     - play -> crud
+    - play -> cobertura 2.4:
+        id: test
+    
