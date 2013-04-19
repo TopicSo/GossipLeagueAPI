@@ -199,7 +199,7 @@ public class GameControllerTest extends BaseControllerTest {
         
         JsonObject parsedLocal = addedGame.getAsJsonObject("game").getAsJsonObject("local");
         JsonObject parsedVisitor = addedGame.getAsJsonObject("game").getAsJsonObject("visitor");
-		assertEquals(false, addedGame.getAsJsonPrimitive("added").getAsBoolean());
+		assertEquals(true, addedGame.getAsJsonPrimitive("added").getAsBoolean());
 		assertEquals(1, parsedLocal.getAsJsonPrimitive("countGames").getAsInt());
 		assertEquals(0, parsedLocal.getAsJsonPrimitive("countWins").getAsInt());
 		assertEquals(1, parsedLocal.getAsJsonPrimitive("countLosts").getAsInt());

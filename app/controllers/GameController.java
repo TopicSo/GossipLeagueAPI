@@ -55,6 +55,7 @@ public class GameController extends Controller {
    
     	try{    		
     		game = new Game(local, visitor, localGoals, visitorGoals);
+    		added = true;
     		game.save();
     	}
     	catch(GameInvalidModelException e){
