@@ -120,8 +120,8 @@ public class GameControllerTest extends BaseControllerTest {
 		player.save();
 		
 		Map parameters = new HashMap<String, String>();
-        parameters.put("localPlayerId", player.getId());
-        parameters.put("visitorPlayerId", player.getId());
+        parameters.put("localPlayer", player.getId());
+        parameters.put("visitorPlayer", player.getId());
         
 		response = POST("/games", parameters);
 		
@@ -129,6 +129,30 @@ public class GameControllerTest extends BaseControllerTest {
         JsonObject addedGame = parser.parse(response.out.toString()).getAsJsonObject();
         
 		assertEquals(false, addedGame.getAsJsonPrimitive("added").getAsBoolean());
+	}
+	
+
+	@Test
+	public void postAGameWithUsernamesReturnAGame(){
+		Player local = new Player("local", "localemail");
+		local.save();
+
+		Player visitor = new Player("visitor", "visitoremail");
+		visitor.save();
+
+		Map parameters = new HashMap<String, String>();
+        parameters.put("localPlayer", "local");
+        parameters.put("visitorPlayer", "visitor");
+        parameters.put("localGoals", "0");
+        parameters.put("visitorGoals", "5");
+        
+		response = POST("/games", parameters);
+		
+		
+    	JsonParser parser = new JsonParser();
+        JsonObject addedGame = parser.parse(response.out.toString()).getAsJsonObject();
+        
+        assertNotNull(addedGame.getAsJsonObject("game"));
 	}
 	
 	@Test
@@ -140,8 +164,8 @@ public class GameControllerTest extends BaseControllerTest {
 		visitor.save();
 
 		Map parameters = new HashMap<String, String>();
-        parameters.put("localPlayerId", local.getId());
-        parameters.put("visitorPlayerId", visitor.getId());
+        parameters.put("localPlayer", local.getId());
+        parameters.put("visitorPlayer", visitor.getId());
         parameters.put("localGoals", "0");
         parameters.put("visitorGoals", "5");
         
@@ -163,8 +187,8 @@ public class GameControllerTest extends BaseControllerTest {
 		visitor.save();
 
 		Map parameters = new HashMap<String, String>();
-        parameters.put("localPlayerId", local.getId());
-        parameters.put("visitorPlayerId", visitor.getId());
+        parameters.put("localPlayer", local.getId());
+        parameters.put("visitorPlayer", visitor.getId());
         parameters.put("localGoals", "0");
         parameters.put("visitorGoals", "5");
         

@@ -32,17 +32,23 @@ public class GameController extends Controller {
 		render(games);
 	}
 	
-    public static void addGame(@Required String localPlayerId, @Required String visitorPlayerId, @Required int localGoals, @Required int visitorGoals) throws Exception{
+    public static void addGame(@Required String localPlayer, @Required String visitorPlayer, @Required int localGoals, @Required int visitorGoals) throws Exception{
     	boolean added = false;
     	Game game = null;
     	
-    	if(localPlayerId == null || visitorPlayerId == null){
+    	if(localPlayer == null || visitorPlayer == null){
     		render(added, game);
     	}
     
-    	Player local = Player.findById(localPlayerId);
-    	Player visitor = Player.findById(visitorPlayerId);
+    	Player local = Player.findById(localPlayer);
+    	if(local == null){
+    		local = Player.findByUsername(localPlayer);
+    	}
     	
+    	Player visitor = Player.findById(visitorPlayer);
+    	if(visitor == null){
+    		visitor = Player.findByUsername(visitorPlayer);
+    	}
     	if(local == null || visitor == null){
     		throw new Exception("Unexpected Players");
     	}
