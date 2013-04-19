@@ -1,5 +1,7 @@
 "id": "${_game.getId()}",
 "playedOn": ${_game.getPlayedOnDateSeconds()},
+"localGoals": ${_game.getGolsLocal()},
+"visitorGoals": ${_game.getGolsVisitor()},
 "local": {
 #{presenters/player player:_game.getLocal() /}
 },
