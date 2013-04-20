@@ -1,5 +1,6 @@
 "id": "${_player.getId()}",
 "username": "${_player.getUsername()}",
+"avatar": "${_player.getAvatar()}",
 "score": ${_player.score},
 "countGames": ${_player.getCountGames()},
 "countWins": ${_player.getCountWins()},

@@ -13,8 +13,9 @@ public class DevController extends Controller {
 		List<Player> players = Player.findAll();
 		
 		for(Player player: players){
-			//Logger.info("Updated " + player.getUsername() + " avatar " + player.getAvatar());
-			player.setAvatar(Player.gratavarGenerate(player));
+			
+			Logger.info("Updated " + player.getUsername() + " avatar " + player.getAvatar());
+			player.setAvatar(player.gratavarGenerate());
 			player.save();
 		}
 		

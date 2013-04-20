@@ -72,6 +72,7 @@ public class Player extends GenericModel{
 		this.score = DEFAULT_SCORE;
 		
 		this.new_created = new Date().getTime();
+		this.avatar = gratavarGenerate();
 	}
 	
 	/*
@@ -178,10 +179,14 @@ public class Player extends GenericModel{
 		return Player.find("email = ?", email).first();
 	}
 
-	public static String gratavarGenerate(Player player) {
+	/*
+	 * Utils
+	 */
+	
+	public String gratavarGenerate() {
 	
 		try{
-			String emailHasehd = Utils.md5(player.email);
+			String emailHasehd = Utils.md5(email);
 			return String.format("http://gravatar.com/avatar/%s=250", emailHasehd);
 		}
 		catch (Exception e) {
