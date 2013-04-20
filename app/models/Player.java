@@ -12,6 +12,7 @@ import org.hibernate.annotations.GenericGenerator;
 import play.data.validation.Required;
 import play.data.validation.Unique;
 import play.db.jpa.GenericModel;
+import utils.Utils;
 
 @Entity
 public class Player extends GenericModel{
@@ -89,7 +90,11 @@ public class Player extends GenericModel{
 		return this.email;
 	}
 
-    public long getCreationDateSeconds() {
+    public String getAvatar() {
+    	return this.avatar;
+	}
+
+	public long getCreationDateSeconds() {
         return (this.new_created / 1000l);
     }
     
@@ -124,6 +129,10 @@ public class Player extends GenericModel{
 	/*
 	 * Setter 
 	 */
+	
+	public void setAvatar(String avatar) {
+    	this.avatar = avatar;
+	}
 	
 	public void setScore(double score) {
 		this.score = score;
@@ -167,5 +176,16 @@ public class Player extends GenericModel{
 	
 	public static Player findByEmail(String email) {
 		return Player.find("email = ?", email).first();
+	}
+
+	public static String gratavarGenerate(Player player) {
+	
+		try{
+			String emailHasehd = Utils.md5(player.email);
+			return String.format("http://gravatar.com/avatar/%s=250", emailHasehd);
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 }

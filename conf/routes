@@ -22,3 +22,6 @@ POST	/players/?								PlayerController.addPlayer(format:'json')
 # Games
 GET		/games/?								GameController.list(format:'json')
 POST	/games/?								GameController.addGame(format:'json')
+
+# Utils
+GET		/dev/updateAvatars						DevController.updatePlayerAvatars
