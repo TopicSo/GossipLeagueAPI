@@ -144,4 +144,13 @@ public class LeagueScoreEngineTest extends BaseScoreEngineTest{
 		assertDouble((PLAYER_C_BASIC_SCORE + 0.58), theGame.getLocal().getScore());
 		assertDouble((PLAYER_B_BASIC_SCORE - 0.58), theGame.getVisitor().getScore());
 	}
+	
+	@Test
+	public void testPointsChange1() {
+		createBasicGameAB(3, 1);
+		Game theGame = scoreEngine.evaluateFriendshipGame(game);
+		
+		assertDouble(9.64, theGame.getLocalPointsChange());
+		assertDouble(-9.64, theGame.getVisitorPointsChange());
+	}
 }

@@ -17,6 +17,7 @@ public class LeagueScoreEngine {
 			return null;
 		}
 		
+		updatePointsChange(game, K);
 		updatePlayersScore(game, K);
 		updatePlayersGameCount(game);
 		updatePlayersGameWins(game);
@@ -75,4 +76,12 @@ public class LeagueScoreEngine {
 		game.getLocal().setCountConcededGoals(game.getLocal().getCountConcededGoals() + game.getGolsVisitor());
 		game.getVisitor().setCountConcededGoals(game.getVisitor().getCountConcededGoals() + game.getGolsLocal());
 	}	
+	
+	private void updatePointsChange(Game game, int K) {
+		double localPointsChange = EloScoreEngine.pointsChange(game, Player.Type.LOCAL, K);
+		double visitorPointsChange = EloScoreEngine.pointsChange(game, Player.Type.VISITOR, K);
+		
+		game.setLocalPointsChange(localPointsChange);
+		game.setVisitorPointsChange(visitorPointsChange);
+	}
 }

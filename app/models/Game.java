@@ -45,8 +45,14 @@ public class Game extends GenericModel{
     
     @Required
     private int golsVisitor;
+    
+    @Required
+    private double localPointsChange;
+    
+	@Required
+    private double visitorPointsChange;
 
-    public Game(Player localPlayer, Player visitorPlayer, int localGoals, int visitorGoals) throws GameInvalidModelException{
+	public Game(Player localPlayer, Player visitorPlayer, int localGoals, int visitorGoals) throws GameInvalidModelException{
     	super();
     	
     	if(localPlayer.equals(visitorPlayer)){
@@ -89,6 +95,14 @@ public class Game extends GenericModel{
         return (this.new_created / 1000l);
     }
     
+    public double getLocalPointsChange() {
+		return localPointsChange;
+	}
+
+    public double getVisitorPointsChange() {
+		return visitorPointsChange;
+	}
+    
     /*
      * Setter
      */
@@ -124,4 +138,13 @@ public class Game extends GenericModel{
 			return Game.find("(local = ? AND visitor = ?) OR (local = ? AND visitor = ?) order by new_created desc", player1, player2, player2, player1).from(start).fetch(recsPerPage);
 		}
 	}
+	
+	public void setLocalPointsChange(double localPointsChange) {
+		this.localPointsChange = localPointsChange;
+	}
+	
+	public void setVisitorPointsChange(double visitorPointsChange) {
+		this.visitorPointsChange = visitorPointsChange;
+	}
+
 }

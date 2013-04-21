@@ -7,4 +7,6 @@
 },
 "visitor": {
 #{presenters/player player:_game.getVisitor() /}
-}
+},
+"localPointsChange": ${_game.getLocalPointsChange()},
+"visitorPointsChange": ${_game.getVisitoPointsChange()}
