@@ -39,6 +39,8 @@ public class Player extends GenericModel{
     
     private String avatar;
     
+    private String fullname;
+    
 	private int countGames;
 
 	private int countWins;
@@ -95,6 +97,10 @@ public class Player extends GenericModel{
     	return this.avatar;
 	}
 
+    public String getFullname() {
+    	return this.fullname;
+	}
+
 	public long getCreationDateSeconds() {
         return (this.new_created / 1000l);
     }
@@ -133,6 +139,10 @@ public class Player extends GenericModel{
 	
 	public void setAvatar(String avatar) {
     	this.avatar = avatar;
+	}
+	
+	public void setFullname(String fullname) {
+    	this.fullname = fullname;
 	}
 	
 	public void setScore(double score) {

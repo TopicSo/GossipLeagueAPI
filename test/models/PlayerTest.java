@@ -5,18 +5,22 @@ import org.junit.Test;
 import play.test.UnitTest;
 
 public class PlayerTest extends UnitTest {
-
-    @Test
+	
+	private static final double DELTA = 1e-15;
+    
+	@Test
     public void createAnPlayerNotNull() {
 
     	String username = "Test player";
     	String email = "test@mail.com";
     	
-    	Player p = new Player(username, email);
+    	Player player = new Player(username, email);
     	
-    	assertTrue(p != null);
-    	assertTrue(username.equals(p.getUsername()));
-    	assertTrue(email.equals(p.getEmail()));
+    	assertNotNull(player);
+    	assertEquals(username, player.getUsername());
+    	assertEquals(email, player.getEmail());
+    	assertEquals(player.gratavarGenerate(), player.getAvatar());
+    	assertNotSame(0, player.getCreationDateSeconds());
     }
     
     @Test
@@ -27,6 +31,6 @@ public class PlayerTest extends UnitTest {
     	
     	Player p = new Player(username, email);
     	
-    	assertTrue(p.getScore() == Player.DEFAULT_SCORE);
+    	assertEquals(p.getScore(), Player.DEFAULT_SCORE, DELTA);
     }
 }
