@@ -12,10 +12,18 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 public class PlayerControllerTest extends BaseControllerTest {
-
+	
 	@Test
     public void playersRankingIsInJSON() {
         response = GET("/players/ranking");
+        
+        assertIsOk(response);
+        assertContentType("application/json", response);
+    }
+
+	@Test
+    public void playersRequestIsInJSON() {
+        response = GET("/players");
         
         assertIsOk(response);
         assertContentType("application/json", response);
