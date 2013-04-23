@@ -129,7 +129,7 @@ public class Game extends GenericModel{
 		int start = recsPerPage * page;
 
 		if(player1 == null && player2 == null){
-			return Game.findAll();
+			return Game.find("order by new_created desc").from(start).fetch(recsPerPage);
 		} else if(player1 == null){
 			return Game.find("local = ? OR visitor = ? order by new_created desc", player2, player2).from(start).fetch(recsPerPage);
 		} else if(player2 == null){
