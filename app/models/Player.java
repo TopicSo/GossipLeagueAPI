@@ -176,6 +176,10 @@ public class Player extends GenericModel{
 	/*
 	 * Find
 	 */
+
+	public static List<Player> findPlayersSortedByUsername() {
+		return Player.find("order by username asc").fetch();
+	}
 	
 	public static List<Player> findPlayersSortedByScore() {
 		return Player.find("order by score desc").fetch();
