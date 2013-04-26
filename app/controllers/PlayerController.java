@@ -8,6 +8,11 @@ import play.mvc.Controller;
 
 public class PlayerController extends Controller {
 
+	public static void players(){
+		List<Player> players = Player.findPlayersSortedByUsername();
+		render(players);
+	}
+	
 	public static void ranking(){
 		List<Player> players = Player.findPlayersSortedByScore();
 		render(players);
