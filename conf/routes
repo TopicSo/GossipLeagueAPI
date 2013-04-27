@@ -17,12 +17,17 @@ GET    /depares/delete							Application.deleteAll
 
 # PLayers
 GET		/players/?								PlayerController.players(format:'json')
+GET		/players/raw/?							PlayerController.playersRaw
 GET		/players/ranking/?						PlayerController.ranking(format:'json')
 POST	/players/?								PlayerController.addPlayer(format:'json')
+POST	/players/reset/?						PlayerController.resetPlayers(format:'json')
+POST	/players/deleteAll/?					PlayerController.deleteAll(format:'json')
 
 # Games
 GET		/games/?								GameController.list(format:'json')
+GET		/games/raw/?							GameController.listRaw
 POST	/games/?								GameController.addGame(format:'json')
+POST	/games/deleteAll/?						GameController.deleteAll(format:'json')
 
 # Utils
 GET		/dev/updateAvatars						DevController.updatePlayerAvatars

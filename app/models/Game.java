@@ -122,22 +122,6 @@ public class Game extends GenericModel{
 	public void setGolsVisitor(int golsVisitor) {
 		this.golsVisitor = golsVisitor;
 	}
-
-	public static List<Game> findGamesBetween(Player player1, Player player2,
-			int page, int recsPerPage) {
-
-		int start = recsPerPage * page;
-
-		if(player1 == null && player2 == null){
-			return Game.findAll();
-		} else if(player1 == null){
-			return Game.find("local = ? OR visitor = ? order by new_created desc", player2, player2).from(start).fetch(recsPerPage);
-		} else if(player2 == null){
-			return Game.find("local = ? OR visitor = ? order by new_created desc", player1, player1).from(start).fetch(recsPerPage);
-		} else{
-			return Game.find("(local = ? AND visitor = ?) OR (local = ? AND visitor = ?) order by new_created desc", player1, player2, player2, player1).from(start).fetch(recsPerPage);
-		}
-	}
 	
 	public void setLocalPointsChange(double localPointsChange) {
 		this.localPointsChange = localPointsChange;
@@ -147,4 +131,23 @@ public class Game extends GenericModel{
 		this.visitorPointsChange = visitorPointsChange;
 	}
 
+	/*
+	 * Find 
+	 */
+	
+	public static List<Game> findGamesBetween(Player player1, Player player2,
+			int page, int recsPerPage) {
+
+		int start = recsPerPage * page;
+
+		if(player1 == null && player2 == null){
+			return Game.find("order by new_created desc").from(start).fetch(recsPerPage);
+		} else if(player1 == null){
+			return Game.find("local = ? OR visitor = ? order by new_created desc", player2, player2).from(start).fetch(recsPerPage);
+		} else if(player2 == null){
+			return Game.find("local = ? OR visitor = ? order by new_created desc", player1, player1).from(start).fetch(recsPerPage);
+		} else{
+			return Game.find("(local = ? AND visitor = ?) OR (local = ? AND visitor = ?) order by new_created desc", player1, player2, player2, player1).from(start).fetch(recsPerPage);
+		}
+	}
 }

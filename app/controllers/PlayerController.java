@@ -2,6 +2,9 @@ package controllers;
 
 import java.util.List;
 
+import controllers.admin.Players;
+
+import models.Game;
 import models.Player;
 import play.data.validation.Required;
 import play.mvc.Controller;
@@ -11,6 +14,19 @@ public class PlayerController extends Controller {
 	public static void players(){
 		List<Player> players = Player.findPlayersSortedByUsername();
 		render(players);
+	}
+
+	public static void playersRaw(){
+		
+		List<Player> players = Player.findAll();
+		
+		String output = "";
+		for(Player player: players){
+			output = output + "echo \"Adding player " + player.getUsername() + " " + player.getEmail() + "\"\n";
+			output = output + "sh addPlayer.sh " + player.getUsername() + " " + player.getEmail() + "\n\n";
+		}
+		
+		renderText(output);
 	}
 	
 	public static void ranking(){
@@ -35,4 +51,28 @@ public class PlayerController extends Controller {
 		
 		render(added, player);
 	}
+	
+	public static void resetPlayers(){
+		List<Player> players = Player.findPlayersSortedByUsername();
+		boolean reset = false;
+		
+		if(players == null || players.size() == 0){
+			render(reset);
+		}
+		
+		for(Player player: players){
+			player.resetParams();
+			player.save();
+		}
+		
+		reset = true;
+		
+		render(reset);
+	}
+
+    public static void deleteAll(){
+    
+    	Game.deleteAll();
+    	render();
+    }
 }
