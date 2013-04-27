@@ -51,4 +51,22 @@ public class PlayerController extends Controller {
 		
 		render(added, player);
 	}
+	
+	public static void resetPlayers(){
+		List<Player> players = Player.findPlayersSortedByUsername();
+		boolean reset = false;
+		
+		if(players == null || players.size() == 0){
+			render(reset);
+		}
+		
+		for(Player player: players){
+			player.resetParams();
+			player.save();
+		}
+		
+		reset = true;
+		
+		render(reset);
+	}
 }

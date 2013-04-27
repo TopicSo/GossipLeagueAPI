@@ -20,6 +20,7 @@ GET		/players/?								PlayerController.players(format:'json')
 GET		/players/raw?							PlayerController.playersRaw
 GET		/players/ranking/?						PlayerController.ranking(format:'json')
 POST	/players/?								PlayerController.addPlayer(format:'json')
+POST	/players/reset?							PlayerController.resetPlayers(format:'json')
 
 # Games
 GET		/games/?								GameController.list(format:'json')
