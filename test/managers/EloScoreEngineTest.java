@@ -107,4 +107,12 @@ public class EloScoreEngineTest extends BaseScoreEngineTest{
 			
 		assertDouble(0.5, gameResult);
 	}
+	
+	@Test
+	public void testGScoreFor4GolsDifferences() {
+		createBasicGameAB(4, 0);
+		double gScore = eloEngine.gScore(game);
+			
+		assertDouble(0.875, gScore);
+	}
 }

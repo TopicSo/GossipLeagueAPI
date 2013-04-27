@@ -23,7 +23,7 @@ public class EloScoreEngine {
 	}
 	
 	public static double expectedGameResult(Game game, Player.Type playerType) {
-		double expectedGameResult = 1.0/(Math.pow(10, -(double)scoreDifference(game)/400) + 1);
+		double expectedGameResult = 1.0/(Math.pow(10, -(double)scoreDifference(game)/400.0) + 1);
 		
 		if (isLocalPlayerStronger(game)) {
 			if (playerType == Player.Type.LOCAL) {
@@ -52,7 +52,7 @@ public class EloScoreEngine {
 		return game.getLocal().getScore() < game.getVisitor().getScore();
 	}
 	
-	private static double gScore(Game game) {
+	public static double gScore(Game game) {
 		int goalsDifference = golsDifference(game);
 		if (goalsDifference == 0 || goalsDifference == 1) {
 			return 1;
@@ -60,7 +60,7 @@ public class EloScoreEngine {
 		if (goalsDifference == 2) {
 			return 1.5;
 		}
-		return (11 - goalsDifference)/8;
+		return (11 - goalsDifference)/8.0;
 	}
 	
 	private static int golsDifference(Game game) {
