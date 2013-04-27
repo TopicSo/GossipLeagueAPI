@@ -39,6 +39,8 @@ public class Player extends GenericModel{
     
     private String avatar;
     
+    private String fullname;
+    
 	private int countGames;
 
 	private int countWins;
@@ -96,8 +98,7 @@ public class Player extends GenericModel{
 	}
 
     public String getFullname() {
-    	//return this.fullname;
-    	return null;
+    	return this.fullname;
 	}
 
 	public long getCreationDateSeconds() {
@@ -141,7 +142,7 @@ public class Player extends GenericModel{
 	}
 	
 	public void setFullname(String fullname) {
-    	//this.fullname = fullname;
+    	this.fullname = fullname;
 	}
 	
 	public void setScore(double score) {
