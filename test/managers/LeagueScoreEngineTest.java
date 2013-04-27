@@ -1,6 +1,7 @@
 package managers;
 
 import models.Game;
+import models.Game.GameInvalidModelException;
 import models.Player;
 
 import org.junit.After;
@@ -152,5 +153,17 @@ public class LeagueScoreEngineTest extends BaseScoreEngineTest{
 		
 		assertDouble(9.64, theGame.getLocalPointsChange());
 		assertDouble(-9.64, theGame.getVisitorPointsChange());
+	}
+	
+	@Test
+	public void testUnglorious4_0() throws GameInvalidModelException {
+		Player localPlayer = new Player(999);
+		Player visitorPlayer = new Player(1036);
+		
+		Game theGame = new Game(localPlayer, visitorPlayer, 0, 4);
+		scoreEngine.evaluateFriendshipGame(theGame);
+		
+		assertDouble(-7.82, theGame.getLocalPointsChange());
+		assertDouble(+7.82, theGame.getVisitorPointsChange());
 	}
 }
