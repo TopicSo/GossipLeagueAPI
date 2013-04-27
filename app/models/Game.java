@@ -45,12 +45,6 @@ public class Game extends GenericModel{
     
     @Required
     private int golsVisitor;
-    
-    @Required
-    private double localPointsChange;
-    
-	@Required
-    private double visitorPointsChange;
 
 	public Game(Player localPlayer, Player visitorPlayer, int localGoals, int visitorGoals) throws GameInvalidModelException{
     	super();
@@ -96,11 +90,13 @@ public class Game extends GenericModel{
     }
     
     public double getLocalPointsChange() {
-		return localPointsChange;
+		//return localPointsChange;
+    	return 0;
 	}
 
     public double getVisitorPointsChange() {
-		return visitorPointsChange;
+		//return visitorPointsChange;
+    	return 0;
 	}
     
     /*
@@ -124,11 +120,11 @@ public class Game extends GenericModel{
 	}
 	
 	public void setLocalPointsChange(double localPointsChange) {
-		this.localPointsChange = localPointsChange;
+		//this.localPointsChange = localPointsChange;
 	}
 	
 	public void setVisitorPointsChange(double visitorPointsChange) {
-		this.visitorPointsChange = visitorPointsChange;
+		//this.visitorPointsChange = visitorPointsChange;
 	}
 
 	/*
