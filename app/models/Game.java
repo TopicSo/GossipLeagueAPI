@@ -122,7 +122,19 @@ public class Game extends GenericModel{
 	public void setGolsVisitor(int golsVisitor) {
 		this.golsVisitor = golsVisitor;
 	}
+	
+	public void setLocalPointsChange(double localPointsChange) {
+		this.localPointsChange = localPointsChange;
+	}
+	
+	public void setVisitorPointsChange(double visitorPointsChange) {
+		this.visitorPointsChange = visitorPointsChange;
+	}
 
+	/*
+	 * Find 
+	 */
+	
 	public static List<Game> findGamesBetween(Player player1, Player player2,
 			int page, int recsPerPage) {
 
@@ -138,13 +150,4 @@ public class Game extends GenericModel{
 			return Game.find("(local = ? AND visitor = ?) OR (local = ? AND visitor = ?) order by new_created desc", player1, player2, player2, player1).from(start).fetch(recsPerPage);
 		}
 	}
-	
-	public void setLocalPointsChange(double localPointsChange) {
-		this.localPointsChange = localPointsChange;
-	}
-	
-	public void setVisitorPointsChange(double visitorPointsChange) {
-		this.visitorPointsChange = visitorPointsChange;
-	}
-
 }
