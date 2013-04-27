@@ -32,6 +32,20 @@ public class GameController extends Controller {
 		render(games);
 	}
 	
+	public static void listRaw(){
+		
+		List<Game> games = Game.findAll();
+		
+		String output = "";
+		for(Game game: games){
+			output = output + "echo \"Adding a game between " + game.getLocal().getUsername() + " and " + game.getVisitor().getUsername() + " with: " + game.getGolsLocal() + "-" + game.getGolsVisitor() + "\n";
+			output = output + "sh addGame.sh " + game.getLocal().getUsername() + " " + game.getVisitor().getUsername() + " " + game.getGolsLocal() + " " + game.getGolsVisitor() + "\n";
+		}
+		
+		renderText(output);
+	}
+	
+	
     public static void addGame(@Required String localPlayer, @Required String visitorPlayer, @Required int localGoals, @Required int visitorGoals) throws Exception{
     	boolean added = false;
     	Game game = null;

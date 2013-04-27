@@ -22,6 +22,7 @@ POST	/players/?								PlayerController.addPlayer(format:'json')
 
 # Games
 GET		/games/?								GameController.list(format:'json')
+GET		/games/raw?								GameController.listRaw
 POST	/games/?								GameController.addGame(format:'json')
 
 # Utils
