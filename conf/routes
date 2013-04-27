@@ -17,6 +17,7 @@ GET    /depares/delete							Application.deleteAll
 
 # PLayers
 GET		/players/?								PlayerController.players(format:'json')
+GET		/players/raw?							PlayerController.playersRaw
 GET		/players/ranking/?						PlayerController.ranking(format:'json')
 POST	/players/?								PlayerController.addPlayer(format:'json')
 

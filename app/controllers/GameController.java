@@ -38,8 +38,8 @@ public class GameController extends Controller {
 		
 		String output = "";
 		for(Game game: games){
-			output = output + "echo \"Adding a game between " + game.getLocal().getUsername() + " and " + game.getVisitor().getUsername() + " with: " + game.getGolsLocal() + "-" + game.getGolsVisitor() + "\n";
-			output = output + "sh addGame.sh " + game.getLocal().getUsername() + " " + game.getVisitor().getUsername() + " " + game.getGolsLocal() + " " + game.getGolsVisitor() + "\n";
+			output = output + "echo \"Adding a game between " + game.getLocal().getUsername() + " and " + game.getVisitor().getUsername() + " with: " + game.getGolsLocal() + "-" + game.getGolsVisitor() + "\"\n";
+			output = output + "sh addGame.sh " + game.getLocal().getUsername() + " " + game.getVisitor().getUsername() + " " + game.getGolsLocal() + " " + game.getGolsVisitor() + "\n\n";
 		}
 		
 		renderText(output);
