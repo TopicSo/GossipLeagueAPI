@@ -87,4 +87,10 @@ public class GameController extends Controller {
     	
         render(added, game);
     }
+    
+    public static void deleteAll(){
+    
+    	Game.deleteAll();
+    	render();
+    }
 }
