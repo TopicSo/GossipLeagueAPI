@@ -113,6 +113,6 @@ public class EloScoreEngineTest extends BaseScoreEngineTest{
 		createBasicGameAB(4, 0);
 		double gScore = eloEngine.gScore(game);
 			
-		assertDouble(0.875, gScore);
+		assertDouble(1.875, gScore);
 	}
 }
