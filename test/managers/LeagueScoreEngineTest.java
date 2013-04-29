@@ -8,6 +8,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import play.Logger;
+
 /* 
  BASIC SCORE 
 ---------------------
@@ -156,14 +158,26 @@ public class LeagueScoreEngineTest extends BaseScoreEngineTest{
 	}
 	
 	@Test
-	public void testUnglorious4_0() throws GameInvalidModelException {
+	public void testUnglorious0_4() throws GameInvalidModelException {
 		Player localPlayer = new Player(999);
 		Player visitorPlayer = new Player(1036);
 		
 		Game theGame = new Game(localPlayer, visitorPlayer, 0, 4);
 		scoreEngine.evaluateFriendshipGame(theGame);
 		
-		assertDouble(-7.82, theGame.getLocalPointsChange());
-		assertDouble(+7.82, theGame.getVisitorPointsChange());
+		assertDouble(-16.76, theGame.getLocalPointsChange());
+		assertDouble(+16.76, theGame.getVisitorPointsChange());
+	}
+	
+	@Test
+	public void testUnglorious1_6() throws GameInvalidModelException {
+		Player localPlayer = new Player(975);
+		Player visitorPlayer = new Player(970);
+		
+		Game theGame = new Game(localPlayer, visitorPlayer, 1, 6);
+		scoreEngine.evaluateFriendshipGame(theGame);
+		
+		assertDouble(-20.29, theGame.getLocalPointsChange());
+		assertDouble(+20.29, theGame.getVisitorPointsChange());
 	}
 }
