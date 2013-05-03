@@ -150,4 +150,17 @@ public class Game extends GenericModel{
 			return Game.find("(local = ? AND visitor = ?) OR (local = ? AND visitor = ?) order by new_created desc", player1, player2, player2, player1).from(start).fetch(recsPerPage);
 		}
 	}
+
+	public void reset() {
+		this.localPointsChange = 0;
+		this.visitorPointsChange = 0;		
+	}
+	
+	public boolean hasDefaultParams() {
+		if ((this.localPointsChange != 0) || (this.visitorPointsChange != 0)) {
+			return false;
+		}
+		
+		return true;
+	}
 }

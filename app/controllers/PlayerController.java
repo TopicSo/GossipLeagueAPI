@@ -8,6 +8,7 @@ import models.Game;
 import models.Player;
 import play.data.validation.Required;
 import play.mvc.Controller;
+import play.mvc.Util;
 
 public class PlayerController extends Controller {
 
@@ -34,40 +35,44 @@ public class PlayerController extends Controller {
 		render(players);
 	}
 	
-	public static void addPlayer(@Required String username, @Required String email) throws Exception{
-		
-		boolean added = false; 
-		Player player = null;
-		
-		if (username != null && email != null) {
-			
-			if(Player.findByUsername(username) == null && Player.findByEmail(email) == null){
-				
-				added = true;
-				player = new Player(username, email);
-				player.save();
-			}
-        }
+	public static void addPlayer(@Required String username, @Required String email) { 
+		Player player = PlayerController.addPlayerUtil(username, email);
+		boolean added = (player != null);
 		
 		render(added, player);
 	}
 	
+	@Util
+	public static Player addPlayerUtil(@Required String username, @Required String email) {
+		Player player = null;
+		
+		if (username != null && email != null) {
+			if(Player.findByUsername(username) == null && Player.findByEmail(email) == null){
+				player = new Player(username, email);
+				player.save();
+			}
+        }
+		return player;
+	}
+	
 	public static void resetPlayers(){
+		boolean reset = PlayerController.resetPlayersUtil();
+		render(reset);
+	}
+	
+	@Util
+	public static boolean resetPlayersUtil() {
 		List<Player> players = Player.findPlayersSortedByUsername();
-		boolean reset = false;
 		
 		if(players == null || players.size() == 0){
-			render(reset);
+			return false;
 		}
 		
 		for(Player player: players){
 			player.resetParams();
 			player.save();
 		}
-		
-		reset = true;
-		
-		render(reset);
+		return true;
 	}
 
     public static void deleteAll(){

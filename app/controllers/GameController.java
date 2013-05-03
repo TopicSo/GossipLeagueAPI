@@ -112,6 +112,15 @@ public class GameController extends Controller {
 	
 	@Util
 	public static void resetAllUtil() {
+		List<Game> games = Game.findAll();
+		for (int i = 0; i < games.size(); i++) {
+			Game game = games.get(i);
+		}
+	}
+
+	@Util
+	public static void recalculateAllGames() {
+		GameController.resetAllUtil();
 		
 	}
 }
