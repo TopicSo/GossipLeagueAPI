@@ -8,6 +8,7 @@ import models.Game.GameInvalidModelException;
 import models.Player;
 import play.data.validation.Required;
 import play.mvc.Controller;
+import play.mvc.Util;
 
 public class GameController extends Controller {
 
@@ -77,12 +78,13 @@ public class GameController extends Controller {
 			throw new Exception("Unexpected Players");
 		}
 
-		game = addGameInternal(local, visitor, localGoals, visitorGoals);
+		game = addGameUtil(local, visitor, localGoals, visitorGoals);
 		added = game != null;
 		render(added, game);
 	}
 
-	public static Game addGameInternal(Player local, Player visitor,
+	@Util
+	public static Game addGameUtil(Player local, Player visitor,
 			int localGoals, int visitorGoals) {
 		Game game = null;
 		try {
@@ -106,5 +108,10 @@ public class GameController extends Controller {
 	public static void deleteAll() {
 		Game.deleteAll();
 		render();
+	}
+	
+	@Util
+	public static void resetAllUtil() {
+		
 	}
 }

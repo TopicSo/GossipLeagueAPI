@@ -15,5 +15,10 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.playframework.playclipse.playNature</nature>
 	</natures>
-	
+	<linkedResources><link><name>crud</name><type>2</type><location>/usr/local/Cellar/play12/1.2.5/libexec/modules/crud/app</location></link>
+<link><name>conf/crud</name><type>2</type><location>/usr/local/Cellar/play12/1.2.5/libexec/modules/crud/conf</location></link>
+<link><name>public/crud</name><type>2</type><location>/usr/local/Cellar/play12/1.2.5/libexec/modules/crud/public</location></link>
+<link><name>cobertura-2.4</name><type>2</type><location>/Users/iPepito/src/Eclipse/GossipLeagueAPI/modules/cobertura-2.4/app</location></link>
+<link><name>conf/cobertura-2.4</name><type>2</type><location>/Users/iPepito/src/Eclipse/GossipLeagueAPI/modules/cobertura-2.4/conf</location></link>
+</linkedResources>
 </projectDescription>
