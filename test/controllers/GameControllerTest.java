@@ -55,10 +55,12 @@ public class GameControllerTest extends BaseControllerTest {
 		
 		Game game = new Game(localPlayer, visitorPlayer, 2, 3);
 		game.save();
-		sleep(1);
+		String firstAddedGameID = game.getId();
+		
 		Game game2 = new Game(visitorPlayer, localPlayer, 2, 0);
 		game2.save();
-		sleep(1);
+		String secondAddedGameID = game2.getId();
+		
 		Game otherGame = new Game(otherPlayer, visitorPlayer, 2, 3);
 		otherGame.save();
 		
@@ -72,9 +74,8 @@ public class GameControllerTest extends BaseControllerTest {
         JsonObject firstGame = games.get(0).getAsJsonObject();        
         JsonObject secondGame = games.get(1).getAsJsonObject();
         
-        long firstGamePlayedOn = firstGame.getAsJsonPrimitive("playedOn").getAsLong();
-        long secondGamePlayedOn = secondGame.getAsJsonPrimitive("playedOn").getAsLong();
-        assertTrue(firstGamePlayedOn > secondGamePlayedOn);
+        assertEquals(firstGame.getAsJsonPrimitive("id").getAsString(), secondAddedGameID);
+        assertEquals(secondGame.getAsJsonPrimitive("id").getAsString(), firstAddedGameID);
 	}
 
 	@Test

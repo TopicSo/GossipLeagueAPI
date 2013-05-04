@@ -217,4 +217,20 @@ public class Player extends GenericModel{
 		this.countScoredGoals = 0;
 		this.countConcededGoals = 0;
 	}
+	
+	public boolean hasDefaultParams() {
+		if (
+			(this.score != Player.DEFAULT_SCORE) ||
+			(this.countGames != 0) ||
+			(this.countWins != 0) ||
+			(this.countLosts != 0) ||
+			(this.countDraws != 0) ||
+			(this.countScoredGoals != 0) ||
+			(this.countConcededGoals != 0) 
+			) {
+			return false;
+		}
+		
+		return true;
+	}
 }

@@ -1,6 +1,10 @@
 package models;
 
+import models.Game.GameInvalidModelException;
+
 import org.junit.Test;
+
+import controllers.GameController;
 
 import play.test.UnitTest;
 
@@ -33,4 +37,22 @@ public class PlayerTest extends UnitTest {
     	
     	assertEquals(p.getScore(), Player.DEFAULT_SCORE, DELTA);
     }
+    
+    @Test
+    public void reset() throws GameInvalidModelException {
+    	Player localPlayer = new Player("local", "localmail");
+    	localPlayer.setCountConcededGoals(123);
+    	localPlayer.setCountDraws(123);
+    	localPlayer.setCountGames(123);
+    	localPlayer.setCountLosts(123);
+    	localPlayer.setCountScoredGoals(123);
+    	localPlayer.setCountWins(123);
+    	localPlayer.setScore(123);
+		localPlayer.save();
+		
+		localPlayer.resetParams();
+		
+		assertTrue(localPlayer.hasDefaultParams());
+    }
+
 }
