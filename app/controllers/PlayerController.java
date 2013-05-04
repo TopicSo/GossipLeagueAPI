@@ -76,7 +76,6 @@ public class PlayerController extends Controller {
 	}
 
     public static void deleteAll(){
-    
     	Game.deleteAll();
     	render();
     }

@@ -94,15 +94,20 @@ public class GameController extends Controller {
 			return null;
 		}
 
+		evaluateFriendshipGame(game);
+		return game;
+	}
+
+	@Util
+	public static void evaluateFriendshipGame(Game game) {
 		LeagueScoreEngine scoreEngine = new LeagueScoreEngine();
 		scoreEngine.evaluateFriendshipGame(game);
 
 		game.save();
 
 		// update stats
-		local.save();
-		visitor.save();
-		return game;
+		game.getLocal().save();
+		game.getVisitor().save();
 	}
 
 	public static void deleteAll() {
@@ -115,12 +120,20 @@ public class GameController extends Controller {
 		List<Game> games = Game.findAll();
 		for (int i = 0; i < games.size(); i++) {
 			Game game = games.get(i);
+			game.reset();
+			game.save();
 		}
 	}
 
 	@Util
 	public static void recalculateAllGames() {
 		GameController.resetAllUtil();
+		PlayerController.resetPlayersUtil();
+		List<Game> games = Game.find("order by new_created asc").fetch();
+		for (int i = 0; i < games.size(); i++) {
+			Game game = games.get(i);
+			GameController.evaluateFriendshipGame(game);
+		}
 		
 	}
 }
