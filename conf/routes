@@ -14,6 +14,8 @@ GET     /public/                                staticDir:public
 # Admin
 *      /depares									module:crud
 GET    /depares/delete							Application.deleteAll
+GET		/depares/recalculateGames/?				GameController.recalculateGames(format:'json')
+GET		/depares/recalculatePlayers/?			PlayerController.resetPlayers(format:'json')
 
 # PLayers
 GET		/players/?								PlayerController.players(format:'json')
@@ -31,3 +33,4 @@ POST	/games/deleteAll/?						GameController.deleteAll(format:'json')
 
 # Utils
 GET		/dev/updateAvatars						DevController.updatePlayerAvatars
+

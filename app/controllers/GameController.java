@@ -83,6 +83,11 @@ public class GameController extends Controller {
 		render(added, game);
 	}
 
+	public static void recalculateGames(){
+		recalculateAllGames();
+		renderText("OK");
+	}
+	
 	@Util
 	public static Game addGameUtil(Player local, Player visitor,
 			int localGoals, int visitorGoals) {
