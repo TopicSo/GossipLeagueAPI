@@ -201,7 +201,7 @@ public class Player extends GenericModel{
 	
 		try{
 			String emailHasehd = Utils.md5(email);
-			return String.format("http://gravatar.com/avatar/%s=250", emailHasehd);
+			return String.format("http://gravatar.com/avatar/%s?s=250", emailHasehd);
 		}
 		catch (Exception e) {
 			return null;
