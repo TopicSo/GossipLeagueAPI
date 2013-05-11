@@ -258,4 +258,12 @@ public class Player extends GenericModel{
 		long breakEvenPoint = maxGames / BREAK_EVEN_POINT_FACTOR;
 		return breakEvenPoint;
 	}
+	
+	@Override
+	public String toString() {
+
+		String scoreString = String.format("%.2f", score);
+
+		return "Player " + username + " [ id=" + id + ", score=" + scoreString + " ]";
+	}
 }

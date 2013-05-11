@@ -163,4 +163,10 @@ public class Game extends GenericModel{
 		
 		return true;
 	}
+
+	@Override
+	public String toString() {
+
+		return "Game  [ id= " + id + ", localGoals= " + golsLocal + ", visitorGoals= " + golsVisitor+ " ]";
+	}
 }
