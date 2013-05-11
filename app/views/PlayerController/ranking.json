@@ -1,10 +1,21 @@
 {
 	"players":[
-	#{list players, as:'player' } 
+	#{list firstPlayers, as:'player' } 
 {
 	#{presenters/player player:player /}
     }#{if !player_isLast},#{/if}
 
 #{/list}
 ]
+#{if secondPlayers != null },
+	"breakEvenPoint": ${breakEvenPoint},
+	"bottomPlayers":[
+	#{list secondPlayers, as:'player' } 
+{
+	#{presenters/player player:player /}
+    }#{if !player_isLast},#{/if}
+
+#{/list}
+]
+#{/if}
 }

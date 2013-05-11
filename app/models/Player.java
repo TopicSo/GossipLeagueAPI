@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.TypedQuery;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -185,6 +186,19 @@ public class Player extends GenericModel{
 	
 	public static List<Player> findPlayersSortedByScore() {
 		return Player.find("order by score desc").fetch();
+	}
+
+	public static List<Player> findPlayersSortedByScore(int top) {
+		return Player.find("order by score desc").fetch(top);
+	}
+	
+	public static List<Player> findTopPlayersSortedByScore(long breakEvenPoint) {
+		return Player.find("countGames >= " + breakEvenPoint + " order by score desc").fetch();
+	}
+	
+	public static List<Player> findBottomPlayersSortedByScore(
+			long breakEvenPoint) {
+		return Player.find("countGames < " + breakEvenPoint + " order by score desc").fetch();
 	}
 
 	public static Player findByUsername(String username) {

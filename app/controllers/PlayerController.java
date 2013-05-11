@@ -2,8 +2,6 @@ package controllers;
 
 import java.util.List;
 
-import controllers.admin.Players;
-
 import models.Game;
 import models.Player;
 import play.data.validation.Required;
@@ -30,9 +28,21 @@ public class PlayerController extends Controller {
 		renderText(output);
 	}
 	
-	public static void ranking(){
-		List<Player> players = Player.findPlayersSortedByScore();
-		render(players);
+	public static void ranking(boolean divisions){
+		List<Player>	firstPlayers	= null;
+		List<Player>	secondPlayers	= null;
+		long			breakEvenPoint	= 0;
+		
+		if(divisions){
+			breakEvenPoint	= Player.findBreakEvenPoint();	
+			firstPlayers	= Player.findTopPlayersSortedByScore(breakEvenPoint);
+			secondPlayers	= Player.findBottomPlayersSortedByScore(breakEvenPoint);
+		}
+		else{
+			firstPlayers = Player.findPlayersSortedByScore();
+		}
+		
+		render(firstPlayers, secondPlayers, breakEvenPoint);
 	}
 	
 	public static void addPlayer(@Required String username, @Required String email) { 

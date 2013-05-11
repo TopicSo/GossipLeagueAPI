@@ -83,6 +83,31 @@ public class PlayerControllerTest extends BaseControllerTest {
     }
 	
 	@Test
+    public void twoPlayersRankingWithDivisionhaveTwoDivisions() {
+		Player p1 = new Player("user1", "email1");
+		p1.setScore(100);
+		p1.setCountGames(60);
+		p1.save();
+		
+		Player p2 = new Player("user2", "email2");
+		p2.setScore(200);
+		p2.setCountGames(10);
+		p2.save();
+		
+        response = GET("/players/ranking?divisions=true");
+        
+        assertIsOk(response);
+        assertContentType("application/json", response);
+
+    	JsonParser parser = new JsonParser();
+        JsonArray players = parser.parse(response.out.toString()).getAsJsonObject().getAsJsonArray("players");
+        JsonArray bottomPlayers = parser.parse(response.out.toString()).getAsJsonObject().getAsJsonArray("bottomPlayers");
+        
+        assertTrue(players.size() == 1);
+        assertTrue(bottomPlayers.size() == 1);
+    }
+	
+	@Test
 	public void addAPlayerWithoutParametersKO(){
 	    Map parameters = new HashMap<String, String>();
         
