@@ -22,7 +22,7 @@ public class Game extends GenericModel{
 	}
 	
     @Transient
-    public static final int DEFAULT_RECS_PER_PAGE		= 20;
+    public static final int DEFAULT_RECS_PER_PAGE		= 40;
     
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -150,7 +150,29 @@ public class Game extends GenericModel{
 			return Game.find("(local = ? AND visitor = ?) OR (local = ? AND visitor = ?) order by new_created desc", player1, player2, player2, player1).from(start).fetch(recsPerPage);
 		}
 	}
+	
+	public static List<Game> findWinGames(Player player, int page, int recsPerPage) {
 
+		int start = recsPerPage * page;
+		return Game.find("(local = ? AND golsLocal > golsVisitor) OR (visitor = ? AND golsLocal < golsVisitor) order by new_created desc", player, player).from(start).fetch(recsPerPage);
+	}
+	
+	public static List<Game> findLostGames(Player player, int page, int recsPerPage) {
+
+		int start = recsPerPage * page;
+		return Game.find("(local = ? AND golsLocal < golsVisitor) OR (visitor = ? AND golsLocal > golsVisitor) order by new_created desc", player, player).from(start).fetch(recsPerPage);
+	}
+	
+	public static List<Game> findDrawGames(Player player, int page, int recsPerPage) {
+
+		int start = recsPerPage * page;
+		return Game.find("golsLocal = golsVisitor AND (local = ? OR visitor = ?) order by new_created desc", player, player).from(start).fetch(recsPerPage);
+	}
+	
+	/*
+	 * Util
+	 */
+	
 	public void reset() {
 		this.localPointsChange = 0;
 		this.visitorPointsChange = 0;		
