@@ -30,6 +30,9 @@ GET		/games/?								GameController.list(format:'json')
 GET		/games/raw/?							GameController.listRaw
 POST	/games/?								GameController.addGame(format:'json')
 POST	/games/deleteAll/?						GameController.deleteAll(format:'json')
+GET		/games/wins/?							GameController.listWins(format:'json')
+GET		/games/losts/?							GameController.listLosts(format:'json')
+GET		/games/draws/?							GameController.listDraws(format:'json')
 
 # Utils
 GET		/dev/updateAvatars						DevController.updatePlayerAvatars

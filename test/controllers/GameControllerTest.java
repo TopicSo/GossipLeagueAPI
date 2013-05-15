@@ -9,6 +9,8 @@ import models.Player;
 
 import org.junit.Test;
 
+import play.Logger;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -217,4 +219,38 @@ public class GameControllerTest extends BaseControllerTest {
 		assertEquals(0, parsedVisitor.getAsJsonPrimitive("countConcededGoals").getAsInt());
 		assertNotSame(Player.DEFAULT_SCORE, parsedVisitor.getAsJsonPrimitive("score").getAsDouble());
 	}
+	
+	@Test
+	public void winGamesForAPlayer(){
+		Player player = new Player("player", "email");
+		player.save();
+		
+		response = GET("/games/wins?playerId=" + player.getId());
+    	JsonParser parser = new JsonParser();
+        JsonArray games = parser.parse(response.out.toString()).getAsJsonObject().getAsJsonArray("games");
+        assertEquals(0, games.size());
+	}
+	
+	@Test
+	public void lostGamesForAPlayer(){
+		Player player = new Player("player", "email");
+		player.save();
+		
+		response = GET("/games/losts?playerId=" + player.getId());
+    	JsonParser parser = new JsonParser();
+        JsonArray games = parser.parse(response.out.toString()).getAsJsonObject().getAsJsonArray("games");
+        assertEquals(0, games.size());
+	}
+	
+	@Test
+	public void drawsGamesForAPlayer(){
+		Player player = new Player("player", "email");
+		player.save();
+		
+		response = GET("/games/draws?playerId=" + player.getId());
+    	JsonParser parser = new JsonParser();
+        JsonArray games = parser.parse(response.out.toString()).getAsJsonObject().getAsJsonArray("games");
+        assertEquals(0, games.size());
+	}
+	
 }

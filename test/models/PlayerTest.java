@@ -60,7 +60,7 @@ public class PlayerTest extends UnitTest {
     	player.setCountGames(600);
     	player.save();
     	
-    	assertEquals(200, Player.findBreakEvenPoint());
+    	assertEquals(20, Player.findBreakEvenPoint());
     }
     
     @Test

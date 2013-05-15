@@ -6,12 +6,18 @@ import managers.LeagueScoreEngine;
 import models.Game;
 import models.Game.GameInvalidModelException;
 import models.Player;
+import play.Logger;
 import play.data.validation.Required;
 import play.mvc.Controller;
 import play.mvc.Util;
 
 public class GameController extends Controller {
 
+
+	/*
+	 * LIST
+	 */
+	
 	public static void list(String player1Id, String player2Id, int page,
 			int recsPerPage) {
 		Player player1 = null;
@@ -34,6 +40,59 @@ public class GameController extends Controller {
 		render(games);
 	}
 
+	public static void listWins(String playerId, int page,
+			int recsPerPage) {
+		Player player = null;
+		List<Game> games = null;
+
+		if (playerId != null) {
+			player = Player.findById(playerId);
+		}
+
+		Logger.info(" player wins " + player);
+		
+		if (recsPerPage == 0)
+			recsPerPage = Game.DEFAULT_RECS_PER_PAGE;
+
+		games = Game.findWinGames(player, page, recsPerPage);
+
+		render("GameController/list.json", games);
+	}
+	
+	public static void listLosts(String playerId, int page,
+			int recsPerPage) {
+		Player player = null;
+		List<Game> games = null;
+
+		if (playerId != null) {
+			player = Player.findById(playerId);
+		}
+
+		if (recsPerPage == 0)
+			recsPerPage = Game.DEFAULT_RECS_PER_PAGE;
+
+		games = Game.findLostGames(player, page, recsPerPage);
+
+		render("GameController/list.json", games);
+	}
+	
+	public static void listDraws(String playerId, int page,
+			int recsPerPage) {
+		Player player = null;
+		List<Game> games = null;
+
+		if (playerId != null) {
+			player = Player.findById(playerId);
+		}
+
+		if (recsPerPage == 0)
+			recsPerPage = Game.DEFAULT_RECS_PER_PAGE;
+
+		games = Game.findDrawGames(player, page, recsPerPage);
+
+		render("GameController/list.json", games);
+	}
+	
 	public static void listRaw() {
 
 		List<Game> games = Game.findAll();
@@ -54,6 +113,10 @@ public class GameController extends Controller {
 		renderText(output);
 	}
 
+	/*
+	 * ADD
+	 */
+	
 	public static void addGame(@Required String localPlayer,
 			@Required String visitorPlayer, @Required int localGoals,
 			@Required int visitorGoals) throws Exception {
