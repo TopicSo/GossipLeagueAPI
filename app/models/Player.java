@@ -17,7 +17,7 @@ import utils.Utils;
 
 @Entity
 public class Player extends GenericModel{
-	private static final long BREAK_EVEN_POINT_FACTOR = 3;
+	private static final long BREAK_EVEN_POINT = 20;
 
 	public enum Type {
 	    LOCAL, VISITOR
@@ -252,11 +252,7 @@ public class Player extends GenericModel{
 
 	public static long findBreakEvenPoint() {
 
-		TypedQuery<Integer> queryMaxGames = Player.em().createQuery("SELECT MAX(countGames) FROM Player", Integer.class);
-		int maxGames = (Integer)queryMaxGames.getSingleResult();
-
-		long breakEvenPoint = maxGames / BREAK_EVEN_POINT_FACTOR;
-		return breakEvenPoint;
+		return BREAK_EVEN_POINT;
 	}
 	
 	@Override
