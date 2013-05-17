@@ -15,6 +15,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import exceptions.ModelNotFoundException;
+
 public class GameControllerTest extends BaseControllerTest {
     
 	@Test
@@ -252,5 +254,10 @@ public class GameControllerTest extends BaseControllerTest {
         JsonArray games = parser.parse(response.out.toString()).getAsJsonObject().getAsJsonArray("games");
         assertEquals(0, games.size());
 	}
-	
+
+    @Test(expected=ModelNotFoundException.class)
+	public void gamesForUnknowPlayerThrowsException(){
+		
+		response = GET("/games/wins?playerId=" + "id_falso");
+	}
 }

@@ -19,6 +19,9 @@ public class Game extends GenericModel{
 
 	public class GameInvalidModelException extends Exception{
 		
+		public GameInvalidModelException() {
+			super();
+		}
 	}
 	
     @Transient

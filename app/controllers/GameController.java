@@ -1,12 +1,11 @@
 package controllers;
 
 import java.util.List;
-
+import exceptions.ModelNotFoundException;
 import managers.LeagueScoreEngine;
 import models.Game;
 import models.Game.GameInvalidModelException;
 import models.Player;
-import play.Logger;
 import play.data.validation.Required;
 import play.mvc.Controller;
 import play.mvc.Util;
@@ -41,15 +40,17 @@ public class GameController extends Controller {
 	}
 
 	public static void listWins(String playerId, int page,
-			int recsPerPage) {
+			int recsPerPage) throws ModelNotFoundException {
 		Player player = null;
 		List<Game> games = null;
 
 		if (playerId != null) {
 			player = Player.findById(playerId);
 		}
-
-		Logger.info(" player wins " + player);
+		
+		if(player == null){
+			throw new ModelNotFoundException(Player.class);
+		}
 		
 		if (recsPerPage == 0)
 			recsPerPage = Game.DEFAULT_RECS_PER_PAGE;
